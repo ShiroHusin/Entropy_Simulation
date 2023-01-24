@@ -16,7 +16,7 @@ As with any cellular automata project, the rules of the simulation needs to be e
 
 For more details on the calculation of entropy, please see [here].
 
-Examples of the simulations can be shown below in some of GiFs.
+Examples of the simulations can be shown below in some of the Gifs. 
 
 Simulation with a 10% move probability  |  Simulation with a 50% move probability |  
 :-------------------------:|:-------------------------:|
