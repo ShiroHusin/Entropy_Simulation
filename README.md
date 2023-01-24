@@ -10,7 +10,7 @@ Date: 2023-01-25
 ## About
 Entropy is a fascinating concept in physics. The idea of quantifying the number of configurations that a system can occupy is a powerful idea with huge impact within the fields of mathematics, computer science and computational biology. 
 
-In this project, I was inspired by the use of Cellular Automata (CA) to model a stochastic process. The main source code is labelled [Automata](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.py)
+In this project, I was inspired by Conway's game of life and I was curious of using Cellular Automata (CA) to model a stochastic process. The main source code is labelled [Automata](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.py)
 
 As with any cellular automata project, the rules of the simulation needs to be established. For a more comprehensive explanation of the rules please see [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md).
 
