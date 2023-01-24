@@ -12,7 +12,7 @@ Entropy is a fascinating concept in physics. The idea of quantifying the number 
 
 In this project, I was inspired by the use of Cellular Automata (CA) to model a stochastic process. The main source code is labelled [Automata](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.py)
 
-As with any cellular automata project, the rules of the simulation needs to be established. For a more comprehensive explaination of the rules please see [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md).
+As with any cellular automata project, the rules of the simulation needs to be established. For a more comprehensive explanation of the rules please see [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md).
 
 For more details on the calculation of entropy, please see [here].
 
