@@ -10,7 +10,7 @@ The rules of the problem are:
    - If the 1 is completely surrounded by other 1s it can only stay in its place. 
  
 Additional information:
-1. The parameter "move probability" determines the likelyhood that the code responsible for movement will execute for each 1s. 
+The parameter "move probability" determines the likelyhood that the code responsible for movement will execute for each 1s. 
  - A move probability of 100% means that if it can move it will move. 
  - A move probability of 0% means there is absolutely no movement between each cell. The only choice for the 1 cell is to stay in its place over n iterations. 
  - A move probability of 50% means that half of the time if it can move it will move. Likewise, each of the 1s will stay in place 50% of the time. 
