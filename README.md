@@ -20,7 +20,7 @@ Examples of the simulations can be shown below in some of GiFs.
 
 Simulation with a 10% move probability            |  Simulation with a 50% move probability |  Simulation with no restrictions (100%) probability
 :-------------------------:|:-------------------------:|:-------------------------:
-![]  |  ![]| ![]
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D10%25.gif)  |  ![]| ![]
 
 
 
