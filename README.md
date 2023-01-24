@@ -23,7 +23,7 @@ Simulation with a 10% move probability  |  Simulation with a 50% move probabilit
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D10%25.gif)  |  ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D50%25.gif)| 
 
 
-Simulation with a 100% move probability |
+Simulation with no restrictions |
 :-------------------------:
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D100%25.gif)
 
