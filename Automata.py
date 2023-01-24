@@ -80,4 +80,5 @@ def update(frame,grid):
 ani = animation.FuncAnimation(fig, update, fargs=(grid,), frames=no_of_frames, repeat=False,interval=100)
 plt.show()
 
+## ani.save("Entropy.gif")  # If you want to save the file you can uncomment this line.  
 
