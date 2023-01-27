@@ -28,8 +28,9 @@ Simulation with no restrictions |
 
 ## Usage 
 To start the code run [main.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/main.py) in your local machine and ensure that you have numpy, matplotlib and numba installed. 
+At the same time ensure Automata.py is in the same directory as main.py
 
-Once Automata.py is initialized you will be prompted with the following questions
+Once main.py is initialized you will be prompted with the following questions
  - The size of the grid (Recommended: 200 to 250)
  - What sort of move probability you want (Between 0-1)
  - What sort of shape you want as a start (Rectangle, circle or ellipse)
