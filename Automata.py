@@ -113,10 +113,6 @@ fig, (ax,ax2) = plt.subplots(1,2, figsize=(10,5), width_ratios=[1.8, 1])
 im = ax.imshow(grid[1:-1, 1:-1], cmap='inferno', vmin=0, vmax=1)
 ax.set_xlabel("Rows")
 ax.set_ylabel("Columns")
-
-
-
-
 xor_values = []
 
 def update(frame,grid):
