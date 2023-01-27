@@ -26,7 +26,17 @@ Simulation with no restrictions |
 :-------------------------:
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D100%25.gif)
 
+## Usage 
+To start the code run Automata.py in your local machine and ensure that you have numpy, matplotlib and numba installed. 
 
+Once Automata.py is initialized you will be prompted with the following questions
+ - The size of the grid (Recommended: 200 to 250)
+ - What sort of move probability you want (Between 0-1)
+ - What sort of shape you want as a start (Rectangle, circle or ellipse)
+ - How many frames should the animation run for (Recommended: 300 to 600) 
+
+Then the animation will run accordingly. As a small catch, make sure that your numpy is installed as 1.23.1 otherwise numba wouldn't work at all and your simulation will be incredibly slow. 
+ 
 ## Dependencies
 - numpy=1.23.1
 - matplotlib=3.6.3
