@@ -115,6 +115,7 @@ ax.set_xlabel("Rows")
 ax.set_ylabel("Columns")
 xor_values = []
 
+## This function is responsible for compiling all essentiall functions to run the animation
 def update(frame,grid):
     grid = apply_rules_2d(grid,  alpha)
     im.set_data(grid[1:-1, 1:-1])
@@ -136,4 +137,3 @@ ani = animation.FuncAnimation(fig, update, fargs=(grid,), frames=no_of_frames, r
 plt.show()
 
 ## ani.save("Entropy.gif")  # If you want to save the file you can uncomment this line.  
-
