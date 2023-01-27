@@ -10,7 +10,7 @@ from numba import njit
 ## Asks what you want l (the length and width) of the Matrix to be
 while True:
     length = int(input("Enter the length of the square grid (between 200 and 250): "))
-    if 200 <= length <= 250:
+    if 100 <= length <= 250:
         break
     else:
         print("Please put a number between 200 and 250")
