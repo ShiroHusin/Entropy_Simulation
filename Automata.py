@@ -1,41 +1,47 @@
 import sys
 import math
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 ## Because the animation gets so computationally slow for large grids
 from numba import njit
 
 # User defined inputs Code will keep asking until the user is correct.
-## Asks what you want l (the length and width) of the Matrix to be
-while True:
-    length = int(input("Enter the length of the square grid (between 200 and 250): "))
-    if 100 <= length <= 250:
-        break
-    else:
-        print("Please put a number between 200 and 250")
-## Asks do you want to start it with a rectangle or ellipse or circle as the starting point
-while True:
-    choice = input("Now what do you want your initial shape to be, rectangle,ellipse or circle? ")
-    if choice in ["rectangle", "ellipse", "circle"]:
-        break
-    else:
-        print("Invalid Choice")
-## Asks what sort of heat transfer probability or conduction analogue do you wish
-while True:
-    alpha = float(input("Enter the move probability (between 0 and 1): "))
-    if 0 <= alpha <= 1:
-        break
-    else:
-        print("Invalid choice of move probability")
-## Asks how many frames should the code animate
-while True:
-    no_of_frames = int(
-        input("How many frames do you want the animation to consider (Recommended between 300 to 600): "))
-    if 200 <= no_of_frames <= 700:
-        break
-    else:
-        print("Choose a number between 300 and 600")
+# Asks what you want l (the length and width) of the Matrix to be
+class Questions:
+    def get_length(self):
+        while True:
+            length = int(input("Enter the length of the square grid (between 200 and 250): "))
+            if 200 <= length <= 250:
+                return length
+            else:
+                print("Please put a number between 200 and 250")
+
+    def get_shape(self):
+        while True:
+            choice = input("Now what do you want your initial shape to be, rectangle,ellipse or circle? ")
+            if choice in ["rectangle", "ellipse", "circle"]:
+                return choice
+            else:
+                print("Invalid Choice")
+
+    def get_alpha(self):
+        while True:
+            alpha = float(input("Enter the move probability (between 0 and 1): "))
+            if 0 <= alpha <= 1:
+                return alpha
+            else:
+                print("Invalid choice of move probability")
+
+    def get_frames(self):
+        while True:
+            no_of_frames = int(
+                input("How many frames do you want the animation to consider (Recommended between 300 to 600): "))
+            if 200 <= no_of_frames <= 700:
+                return no_of_frames
+            else:
+                print("Choose a number between 300 and 600")
 
 ## @njit used to compile the code below into Machine code
 @njit
@@ -106,16 +112,21 @@ def initialize_grid(length, choice, alpha, no_of_frames):
     test_grid=np.copy(grid)
     return grid, test_grid, float(alpha), int(no_of_frames),n
 
+# Initialise the questions
+questions = Questions()
+length = questions.get_length()
+choice = questions.get_shape()
+alpha = questions.get_alpha()
+no_of_frames = questions.get_frames()
 grid, test_grid, alpha, no_of_frames,n = initialize_grid(length, choice, alpha, no_of_frames)
 
-## Initialise plots
+# Initialise plots
 fig, (ax,ax2) = plt.subplots(1,2, figsize=(10,5), width_ratios=[1.8, 1])
 im = ax.imshow(grid[1:-1, 1:-1], cmap='inferno', vmin=0, vmax=1)
 ax.set_xlabel("Rows")
 ax.set_ylabel("Columns")
 xor_values = []
 
-## This function is responsible for compiling all essentiall functions to run the animation
 def update(frame,grid):
     grid = apply_rules_2d(grid,  alpha)
     im.set_data(grid[1:-1, 1:-1])
@@ -136,4 +147,21 @@ def update(frame,grid):
 ani = animation.FuncAnimation(fig, update, fargs=(grid,), frames=no_of_frames, repeat=False,interval=50)
 plt.show()
 
-## ani.save("Entropy.gif")  # If you want to save the file you can uncomment this line.  
+class DataCollector:
+    def __init__(self):
+        pass
+
+    def collect_data(self, alphas, n_generations, n_runs):
+        results = {'alpha': [], 'xor_result': []}
+        for alpha in alphas:
+            for i in range(n_runs):
+                grid = np.pad(np.zeros((n, n)), pad_width=1, mode='constant', constant_values=1)
+                grid[100:146, 125:178] = 1
+                for frame in range(n_generations):
+                    grid = apply_rules_2d(grid, alpha)
+                xor_result = calculate_xor_sum(grid)
+                results['alpha'].append(alpha)
+                results['xor_result'].append(xor_result)
+
+        df = pd.DataFrame(results)
+        return df
