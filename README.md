@@ -27,7 +27,7 @@ Simulation with no restrictions |
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D100%25.gif)
 
 ## Usage 
-To start the code run Automata.py in your local machine and ensure that you have numpy, matplotlib and numba installed. 
+To start the code run [main.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/main.py) in your local machine and ensure that you have numpy, matplotlib and numba installed. 
 
 Once Automata.py is initialized you will be prompted with the following questions
  - The size of the grid (Recommended: 200 to 250)
