@@ -43,6 +43,34 @@ class Questions:
             else:
                 print("Choose a number between 300 and 600")
 
+# This function is to initialise everything
+def initialize_grid(length, choice, alpha, no_of_frames):
+    length = int(length)
+    n=length
+    grid = np.pad(np.zeros((n, n)), pad_width=1, mode='constant', constant_values=1)
+    if choice == "rectangle":
+        grid[100:146, 125:178] = 1
+    elif choice == "circle":
+        center = ((length/2), (length/2))
+        radius = int(math.sqrt(0.04 * length ** 2 / math.pi))
+        x, y = np.meshgrid(np.linspace(0, length+2, length+2), np.linspace(0, length+2, length+2))
+        distance = np.sqrt((x - center[0]) ** 2 + (y - center[1]) ** 2)
+        grid[distance <= radius] = 1
+    elif choice == "ellipse":
+        center = (length // 2, length // 2)
+        x, y = np.meshgrid(np.linspace(0, length+2, length+2), np.linspace(0, length+2, length+2))
+        a = 0.13 * length  # x-radius
+        b = 0.09 * length  # y-radius
+        ellipse = (x - center[0]) ** 2 / a ** 2 + (y - center[1]) ** 2 / b ** 2
+        grid[ellipse <= 1] = 1
+    else:
+        print("Invalid choice")
+        sys.exit()
+
+    test_grid=np.copy(grid)
+    return grid, test_grid, float(alpha), int(no_of_frames),n
+
+
 ## @njit used to compile the code below into Machine code
 @njit
 # check_energy_conversion_2D is to check so that the 1st law is not broken.
@@ -85,34 +113,6 @@ def calculate_xor_sum(grid):
     xor_value=np.sum(xor_result)
     return xor_value
 
-# This function is to initialise everything
-def initialize_grid(length, choice, alpha, no_of_frames):
-    length = int(length)
-    n=length
-    grid = np.pad(np.zeros((n, n)), pad_width=1, mode='constant', constant_values=1)
-    if choice == "rectangle":
-        grid[100:146, 125:178] = 1
-    elif choice == "circle":
-        center = ((length/2), (length/2))
-        radius = int(math.sqrt(0.04 * length ** 2 / math.pi))
-        x, y = np.meshgrid(np.linspace(0, length+2, length+2), np.linspace(0, length+2, length+2))
-        distance = np.sqrt((x - center[0]) ** 2 + (y - center[1]) ** 2)
-        grid[distance <= radius] = 1
-    elif choice == "ellipse":
-        center = (length // 2, length // 2)
-        x, y = np.meshgrid(np.linspace(0, length+2, length+2), np.linspace(0, length+2, length+2))
-        a = 0.13 * length  # x-radius
-        b = 0.09 * length  # y-radius
-        ellipse = (x - center[0]) ** 2 / a ** 2 + (y - center[1]) ** 2 / b ** 2
-        grid[ellipse <= 1] = 1
-    else:
-        print("Invalid choice")
-        sys.exit()
-
-    test_grid=np.copy(grid)
-    return grid, test_grid, float(alpha), int(no_of_frames),n
-
-
 class AutomataSimulation:
     def __init__(self, grid, alpha, no_of_frames,length):
         self.n=length
@@ -126,6 +126,8 @@ class AutomataSimulation:
         self.ax.set_ylabel("Columns")
         self.xor_values = []
         self.ani = animation.FuncAnimation(self.fig, self.update, frames=self.no_of_frames, repeat=False, interval=50)
+        plt.show()
+
 
 
     def update(self, frame):
@@ -149,7 +151,7 @@ class DataCollector:
     def __init__(self):
         pass
 
-    def collect_data(self, alphas, n_generations, n_runs, length):
+    def collect_data(self, alphas, n_generations, n_runs,length):
         n=length
         results = {'alpha': [], 'xor_result': []}
         for alpha in alphas:
@@ -164,3 +166,4 @@ class DataCollector:
 
         df = pd.DataFrame(results)
         return df
+
