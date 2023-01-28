@@ -6,7 +6,7 @@ The rules of the problem are:
 2. The number of 1s within the grid cannot change. This is an analogue of the 1st law of thermodynamics. 
 
 3. An occupied cell (1) can move in a random direction to an empty cell (0) that is 1 unit away. 
-   - This means that a 1 surrounded by empty cells has 9 possible outcomes or microstates either it can go up, down, left, right or any of the 4 diagonals.
+   - This means that a 1 surrounded by empty cells has 8 possible outcomes or microstates either it can go up, down, left, right or any of the 4 diagonals.
    - If the 1 is completely surrounded by other 1s it can only stay in its place. 
  
 Additional information:
