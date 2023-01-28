@@ -1,3 +1,8 @@
+"""
+This code is to run and test apply_rules_2d its just a copy paste of some old code and the apply_rules_2d function from Automata.py
+This is because I realize that it tends to choose the up direction [0, -1] slightly more often and I'm not sure why.
+"""
+
 import numpy as np
 import random
 import matplotlib.pyplot as plt
