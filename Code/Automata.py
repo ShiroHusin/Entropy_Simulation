@@ -154,7 +154,10 @@ class AutomataSimulation:
         self.xor_values = []
         self.ani = animation.FuncAnimation(self.fig, self.update, frames=self.no_of_frames, repeat=False, interval=50)
         plt.show()
-
+     
+    ## Saves the animation into an appropriate name
+    def save_animation(self, filename):
+        self.ani.save(filename, writer="pillow")
 
     ## This function is to run the frames and is for the animation module in matplotlib
     def update(self, frame):
@@ -172,6 +175,7 @@ class AutomataSimulation:
         if not check_energy_conversion_2D(self.test_grid, grid) or frame > self.no_of_frames:
             self.ani.event_source.stop()
             sys.exit()
+
 
 """
 The final class of DataCollector is just a means to collect some data from a simulation run and plot it. 
