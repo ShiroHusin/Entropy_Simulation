@@ -41,7 +41,7 @@ Then the animation will run accordingly. As a small catch, make sure that your n
 ## Dependencies
 - numpy=1.23.1
 - matplotlib=3.6.3
-- python=3.10
+- pandas=1.53
 - numba=0.56.4
 
 ## Work in progress
