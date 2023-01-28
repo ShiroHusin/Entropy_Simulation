@@ -1,3 +1,10 @@
+"""
+A cellular automata inspired simulation to demonstrate and visualise what entropy actually is
+Author: Bowen Shiro Husin
+Date: 28/01/2023
+Version = Automata_v1
+Note: This file is not meant to be run on its own
+"""
 import sys
 import math
 import numpy as np
@@ -6,9 +13,13 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 ## Because the animation gets so computationally slow for large grids
 from numba import njit
-
-# User defined inputs Code will keep asking until the user is correct.
-# Asks what you want l (the length and width) of the Matrix to be
+"""
+Within the Object class Questions. The user is asked what the length of the grid should be, 
+what the shape choice you want, circle, ellipse or rectangle as the initial shape,
+what the move_probability or alpha you want to use, 
+and how many frames of animations you want to run. 
+Try to choose the recommended shapes or numbers within the prompt
+"""
 class Questions:
     def get_length(self):
         while True:
@@ -43,7 +54,7 @@ class Questions:
             else:
                 print("Choose a number between 300 and 600")
 
-# This function is to initialise everything
+# This initialize_grid function is to start the environment for the simulation
 def initialize_grid(length, choice, alpha, no_of_frames):
     length = int(length)
     n=length
@@ -71,30 +82,40 @@ def initialize_grid(length, choice, alpha, no_of_frames):
     return grid, test_grid, float(alpha), int(no_of_frames),n
 
 
+"""
+The functions check_energy_conversion_2D, apply_rules_2d and calculate_xor_sum is to implement, 
+the critical functions required for applying the rules, making sure that the 1st law of thermodyanimcs isn't broken, 
+and the calculate a proxy measurement of the entropy. 
+"""
 ## @njit used to compile the code below into Machine code
+## This code is to enforce the 1st law. If this is broken the animation completely halts
 @njit
-# check_energy_conversion_2D is to check so that the 1st law is not broken.
 def check_energy_conversion_2D(test_grid, input):
     if np.sum(test_grid[1:-1,1:-1]) == np.sum(input[1:-1,1:-1]):
         return True
     else:
         raise ValueError("Energy within grid not Conserved !")
 
-## Code for a 2D numpy array.
 @njit
 ## This is to apply the big function F(M,\alpha) = M_{k+1} iteration.
+## This function is conceptually the hardest to make
 def apply_rules_2d(grid,heat_transfer_probability):
-    black_cells = np.where(grid[1:-1, 1:-1] == 1)
-    for i in range(len(black_cells[0])):
-        x, y = black_cells[0][i] + 1, black_cells[1][i] + 1
+    black_cells = np.where(grid[1:-1, 1:-1] == 1)     ## Only find tuples where the black cells are
+    for i in range(len(black_cells[0])):              ## For every black cell
+        x, y = black_cells[0][i] + 1, black_cells[1][i] + 1    ## get the x and y axis or positions
 
         if np.random.rand() < heat_transfer_probability:
+            ## Choose which direction it can go
             direction_vector = np.array([[0, -1],[-1, 0], [1, 0], [0, 1], [-1, -1], [1, -1], [1, 1], [-1, 1]])
+            ## Check whats happening on all 8 sides of a 1 cell
             neighbors = np.array(
                 [grid[x][y - 1], grid[x - 1][y], grid[x + 1][y], grid[x][y + 1], grid[x - 1][y - 1], grid[x + 1][y - 1],
                  grid[x + 1][y + 1], grid[x - 1][y + 1]])
+            ## If all the surroundings of a 1 cell is occupied, do nothing
             if np.all(neighbors == 1) == True:
                 pass
+            ## Else select only the lists within direction_vector_array that matches with the truth values of neighbors
+            ## If neighbors==0 select True and randomly select what is available within direction_vector
             else:
                 boolean_dir_index = (neighbors == 0)
                 valid_directions = direction_vector[boolean_dir_index]
@@ -109,12 +130,18 @@ def apply_rules_2d(grid,heat_transfer_probability):
 def calculate_xor_sum(grid):
     grid_i_care=grid[1:-1,1:-1]
     flat_grid = grid_i_care.flatten().astype(np.int64)
+    ## do a XOR operation of the flattened grid and move 1 unit at a time and output the values until the end
     xor_result = np.bitwise_xor(flat_grid[:-1], flat_grid[1:])
     xor_value=np.sum(xor_result)
     return xor_value
 
+"""
+The class AutomataSimulation is to house an object class where the simulation is held. 
+It requires the output from initialize_grid function to run properly 
+"""
 class AutomataSimulation:
     def __init__(self, grid, alpha, no_of_frames,length):
+        ## Declare all the attributes associated within the class AutomataSimulation
         self.n=length
         self.grid = grid
         self.alpha = alpha
@@ -129,7 +156,7 @@ class AutomataSimulation:
         plt.show()
 
 
-
+    ## This function is to run the frames and is for the animation module in matplotlib
     def update(self, frame):
         grid = apply_rules_2d(self.grid,  self.alpha)
         self.im.set_data(grid[1:-1, 1:-1])
@@ -146,7 +173,10 @@ class AutomataSimulation:
             self.ani.event_source.stop()
             sys.exit()
 
-### Standardised way of data collection
+"""
+The final class of DataCollector is just a means to collect some data from a simulation run and plot it. 
+It has its own defined parameters and collect_data is just a function to compute the datapoints. 
+"""
 class DataCollector:
     def __init__(self):
         pass
@@ -166,4 +196,5 @@ class DataCollector:
 
         df = pd.DataFrame(results)
         return df
+
 
