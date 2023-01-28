@@ -15,7 +15,10 @@ def main():
     ## Initialise all the necessary initial conditions
     grid, test_grid, alpha, no_of_frames,n = initialize_grid(length, choice, alpha, no_of_frames)
     ## Runs the simulation
-    Automata.AutomataSimulation(grid, alpha, no_of_frames,length=n)
+    animation = Automata.AutomataSimulation(grid, alpha, no_of_frames, length=n)
+    ## Uncomment this line if you want to save the file with an appropriate name
+    # animation.save_animation("animation.gif")
+
 
 ## Runs Automata.py
 if __name__ == "__main__":
