@@ -1,3 +1,6 @@
+"""
+This file is just to compile all the data so that I can plot a graph
+"""
 from Automata import DataCollector
 import matplotlib.pyplot as plt
 data_collector = DataCollector()
@@ -24,7 +27,7 @@ df2_std = df2.groupby('alpha')['xor_result'].std()
 df3_grouped = df3.groupby('alpha')['xor_result'].mean()
 df3_std = df3.groupby('alpha')['xor_result'].std()
 
-
+## Plot the graphs
 plt.plot(df1_grouped, label='After 300 generations')
 plt.plot(df2_grouped, label='After 600 iterations')
 plt.plot(df3_grouped, label='After 1000 iterations')
