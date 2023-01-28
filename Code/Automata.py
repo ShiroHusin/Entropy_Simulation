@@ -185,7 +185,7 @@ class DataCollector:
     def __init__(self):
         pass
 
-    def collect_data(self, alphas, n_generations, n_runs,length):
+    def collect_data(self, alphas, n_generations, n_runs,length=250):
         n=length
         results = {'alpha': [], 'xor_result': []}
         for alpha in alphas:
@@ -200,5 +200,3 @@ class DataCollector:
 
         df = pd.DataFrame(results)
         return df
-
-
