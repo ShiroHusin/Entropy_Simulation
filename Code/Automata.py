@@ -60,7 +60,10 @@ def initialize_grid(length, choice, alpha, no_of_frames):
     n=length
     grid = np.pad(np.zeros((n, n)), pad_width=1, mode='constant', constant_values=1)
     if choice == "rectangle":
-        grid[100:146, 125:178] = 1
+        x,y=int(n/2), int(n/2)
+        z=int(0.35*x)
+        w=int(0.5*y)
+        grid[x : x+z, y : y+w] = 1
     elif choice == "circle":
         center = ((length/2), (length/2))
         radius = int(math.sqrt(0.04 * length ** 2 / math.pi))
