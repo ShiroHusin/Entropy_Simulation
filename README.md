@@ -44,4 +44,5 @@ Then the animation will run accordingly. As a small catch, make sure that your n
 - pandas=1.53
 - numba=0.56.4
 
-## Work in progress
+## Potential bugs
+As seen from the gifs there are a slight trend towards the upwards direction. I ran the simulation for 6000 iterations and calculated how many times it wants to choose the top direction or the vector [0, -1] it turns out there is a slight bias and I have no idea what is causing it. The bar chart for the result is shown below: 
