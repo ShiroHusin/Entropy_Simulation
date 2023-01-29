@@ -4,7 +4,7 @@ The Simulations can be viewed within the file labelled GiFs.
 
 Author: Bowen Shiro Husin
 
-Date: 2023-01-25
+Date: 2023-01-30
 
 ## About
 Entropy is a fascinating concept in physics. The idea of quantifying the number of configurations that a system can occupy is a powerful idea with huge impact within the fields of mathematics, computer science and computational biology. 
@@ -14,6 +14,8 @@ In this project, I was inspired by Conway's game of life and I was curious of us
 As with any cellular automata project, the rules of the simulation needs to be established. For a more comprehensive explanation of the rules please see [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md).
 
 For more details on the calculation of entropy, please see [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Entropy_Computation.pdf).
+
+For a full explanation of what my thought process is, see [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Thoughts.pdf)
 
 Examples of the simulations can be shown below in some of the Gifs. 
 
@@ -45,4 +47,9 @@ Then the animation will run accordingly. As a small catch, make sure that your n
 - numba=0.56.4
 
 ## Potential bugs
-As seen from the gifs there are a slight trend towards the upwards direction. I ran the simulation for 6000 iterations and calculated how many times it wants to choose the top direction or the vector [0, -1] it turns out there is a slight bias and I have no idea what is causing it. The bar chart for the result is shown below: 
+As seen from the gifs there are a slight trend towards the upwards direction. I ran the simulation for 6000 iterations and calculated how many times it wants to choose the top direction or the vector [0, -1] it turns out there is might be slight bias and I have no idea what is causing it. The bar chart for the results is shown below: 
+Slight bias towards the top direction|
+:-------------------------:
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/bias.png)
+
+Note that "T" is top, "B" is bottom, "R" is right, "L" is left. "TR" is top-right or vector [1, -1]. Top is chosen about 13.5% of the time about 1% higher than the rest.
