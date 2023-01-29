@@ -1,50 +1,12 @@
 """
 This code is to run and test apply_rules_2d its just a copy paste of some old code and the apply_rules_2d function from Automata.py
-This is because I realize that it tends to choose the up direction [0, -1] slightly more often and I'm not sure why.
+This is because I realize that it tends to choose the up direction [0, -1] slightly more often, and I'm not sure why.
 """
 
 import numpy as np
-import random
 import matplotlib.pyplot as plt
 
-def apply_rules_1D(grid):
-    dx = [1, 0, -1]
-    a = np.copy(grid)
-    one_index = np.where(a == 1)
-    for i in one_index[0]:
-        if i > 0 and i < len(a) - 1:
-            neighbors = [a[i - 1], a[i + 1]]
-            if neighbors[0] == 0 and neighbors[1] == 0:
-                possible_directions = random.choice(dx)
-                if possible_directions != 0:
-                    a[i + possible_directions] = 1
-                    a[i] = 0
-                else:
-                    pass
-
-            elif neighbors[0] == 1 and neighbors[1] == 0:
-                possible_directions = random.choice(dx[:2])
-                if possible_directions != 0:
-                    a[i + possible_directions] = 1
-                    a[i] = 0
-                else:
-                    pass
-
-            elif neighbors[0] == 0 and neighbors[1] == 1:
-                possible_directions = random.choice(dx[1:])
-                if possible_directions != 0:
-                    a[i + possible_directions] = 1
-                    a[i] = 0
-                else:
-                    pass
-
-            elif neighbors[0] == 1 and neighbors[1] == 1:
-                possible_directions = dx[1]
-                a[i] = a[i]
-    return (a)
-
 ## Checking for bias in np.random.choice function
-str_to_choose=np.array(["A","B","C","D","E","F","G","H"])
 
 def apply_rules_2d(grid,heat_transfer_probability):
     direction_list=[]
@@ -73,23 +35,27 @@ def apply_rules_2d(grid,heat_transfer_probability):
     return grid,direction_list
 
 # Initialise matplotlib conditions
-n = 100
+n = 250
 grid = np.pad(np.zeros((n, n)), pad_width=1, mode='constant', constant_values=1)
-grid[10:25,15:31]=1
-
+x, y = int(n / 2), int(n / 2)
+z = int(0.35 * x)
+w = int(0.5 * y)
+grid[x: x + z, y: y + w] = 1
 test_grid=np.copy(grid)
 i=1
 direction_string=[]
-while i<1001:
+## Run a while loop 6000 times and plot the bar chart to see the proportion of choices from the 
+## strings np.array(["T","L","R","B","TL","TR","BR","BL"])
+while i<6001:
     grid,list=apply_rules_2d(grid,1)
     direction_string.append(list)
     i=i+1
 direction_string=np.concatenate(direction_string)
 unique, counts = np.unique(direction_string, return_counts=True)
-
-plt.hist(direction_string, bins=len(unique), density=True, color='blue', alpha=0.5)
+counts = counts / sum(counts) * 100
+plt.bar(unique, counts, color='blue', alpha=0.5)
 plt.xlabel("Strings")
-plt.ylabel("Frequency")
-plt.title("Frequency of Strings")
+plt.ylabel("% rate of choice")
+plt.title("Choice rate for each of the 8 directions")
 plt.show()
 
