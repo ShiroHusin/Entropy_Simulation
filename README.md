@@ -57,4 +57,6 @@ Note that "T" is top, "B" is bottom, "R" is right, "L" is left. "TR" is top-righ
 Top is chosen about 13.5% of the time about 1% higher than the rest. The code to produce the graph is [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Bugfixing_analysis.py)
 
 ## Version 2 
-Currently
+Currently, each of the cells can only take 2 discrete values. 1 or 0. In actual quantum mechanical systems, a particle can have multiple discrete energy levels it can take. For instance, the ground state might be e, the first excited state is 2e, the second excited state is 3e and so forth. 
+
+I thought what if each of the cells can take 9 discrete values these are 0, 1, 2, 3, 4, 5, 6, 7, and 8. 0 corresponds to the ground state and 8 is equivalent to the maximum amount of energy that each cell (particle) can take. It would be quite interesting to see if I tinker rule 1 in [rules.md](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md) while keeping everything else enforced. 
