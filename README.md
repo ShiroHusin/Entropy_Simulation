@@ -52,4 +52,5 @@ Slight bias towards the top direction|
 :-------------------------:
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/bias.png)
 
-Note that "T" is top, "B" is bottom, "R" is right, "L" is left. "TR" is top-right or vector [1, -1]. Top is chosen about 13.5% of the time about 1% higher than the rest.
+Note that "T" is top, "B" is bottom, "R" is right, "L" is left. "TR" is top-right or vector [1, -1]. 
+Top is chosen about 13.5% of the time about 1% higher than the rest. The code to produce the graph is [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Bugfixing_analysis.py)
