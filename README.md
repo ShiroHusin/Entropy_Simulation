@@ -62,3 +62,6 @@ Currently, each of the cells can only take 2 discrete values. 1 or 0. In actual 
 I thought what if each of the cells can take 9 discrete values these are 0, 1, 2, 3, 4, 5, 6, 7, and 8. 0 corresponds to the ground state and 8 is equivalent to the maximum amount of energy that each cell (particle) can take. 
 
 It would be quite interesting to see if I tinker rule 1 in [rules.md](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md) while keeping everything else enforced. 
+
+## Currently working in version 2. 
+Doing some researching of using boltzmann distribution etc, to challenge the assumption of "equal a priori probabilities" becuase version 1 runs on that assumption which is actually incorrect for real life scenarios.  
