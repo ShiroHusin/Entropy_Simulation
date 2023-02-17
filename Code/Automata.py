@@ -103,12 +103,11 @@ def check_energy_conversion_2D(test_grid, input):
 ## This is to apply the big function F(M,\alpha) = M_{k+1} iteration.
 ## This function is conceptually the hardest to make
 def apply_rules_2d(grid,heat_transfer_probability):
-    non_zero_cells = np.where(grid[1:-1, 1:-1] == 1)   ## Only find tuples where the non_zero_cells are
+    black_cells = np.where(grid[1:-1, 1:-1] == 1)  ## Only find tuples where the non_zero_cells are
     ## Random assortment of non_zero_cells locations while maintaining correspondance between rows and columns to remove bias in movement. 
-    indices = np.arange(len(non_zero_cells[0]))
+    indices = np.arange(len(black_cells[0]))
     np.random.shuffle(indices)
-    non_zero_cells = (non_zero_cells[0][indices], non_zero_cells[1][indices])
-    
+    black_cells = (black_cells[0][indices], black_cells[1][indices])
     for i in range(len(black_cells[0])):              ## For every black cell
         x, y = black_cells[0][i] + 1, black_cells[1][i] + 1    ## get the x and y axis or positions
 
