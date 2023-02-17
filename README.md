@@ -45,7 +45,8 @@ Then the animation will run accordingly. As a small catch, make sure that your n
 - matplotlib=3.6.3
 - pandas=1.53
 - numba=0.56.4
-- The bug responsible for biased movement in version 1 has been resolved.
+
+The bug responsible for biased movement in version 1 has been resolved.
 
 ## Version 2 
 Currently, each of the cells can only take 2 discrete values. 1 or 0. In actual quantum mechanical systems, a particle can have multiple discrete energy levels it can take. For instance, the ground state might be e, the first excited state is 2e, the second excited state is 3e and so forth. 
