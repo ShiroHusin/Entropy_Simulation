@@ -45,16 +45,7 @@ Then the animation will run accordingly. As a small catch, make sure that your n
 - matplotlib=3.6.3
 - pandas=1.53
 - numba=0.56.4
-
-## Potential bugs
-As seen from the gifs there are a slight trend towards the upwards direction. I ran the simulation for 6000 iterations and calculated how many times it wants to choose the top direction or the vector [0, -1] it turns out there is might be slight bias and I have no idea what is causing it. The bar chart for the results is shown below: 
-Slight bias towards the top direction|
-:-------------------------:
-![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/bias.png)
-
-Note that "T" is top, "B" is bottom, "R" is right, "L" is left. "TR" is top-right or vector [1, -1]. 
-
-Top is chosen about 13.5% of the time about 1% higher than the rest. The code to produce the graph is [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Bugfixing_analysis.py)
+- The bug responsible for biased movement in version has been resolved.
 
 ## Version 2 
 Currently, each of the cells can only take 2 discrete values. 1 or 0. In actual quantum mechanical systems, a particle can have multiple discrete energy levels it can take. For instance, the ground state might be e, the first excited state is 2e, the second excited state is 3e and so forth. 
