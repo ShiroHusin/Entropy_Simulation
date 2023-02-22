@@ -2,9 +2,9 @@
 A cellular automata inspired simulation to demonstrate the 2nd law of thermodynamics. 
 The Simulations can be viewed within the file labelled GiFs. 
 
-Author: Bowen Shiro Husin
+Developer: Bowen Shiro Husin
 
-Date: 2023-01-30
+Date: 2023-02-22
 
 ## About
 Entropy is a fascinating concept in physics. The idea of quantifying the number of configurations that a system can occupy is a powerful idea with huge impact within the fields of mathematics, computer science and computational biology. 
@@ -49,11 +49,10 @@ Then the animation will run accordingly. As a small catch, make sure that your n
 The bug responsible for biased movement in version 1 has been resolved.
 
 ## Version 2 
-Currently, each of the cells can only take 2 discrete values. 1 or 0. In actual quantum mechanical systems, a particle can have multiple discrete energy levels it can take. For instance, the ground state might be e, the first excited state is 2e, the second excited state is 3e and so forth. 
+While version 1 successfully simulates random movement and brownian motion in some ways, I wasn't really done or satisfied that it only shows idealised systems. Hence, I wanted to add multiple features towards the code. The modifications of version 2 are seen [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Rules.md)
 
-I thought what if each of the cells can take 9 discrete values these are 0, 1, 2, 3, 4, 5, 6, 7, and 8. 0 corresponds to the ground state and 8 is equivalent to the maximum amount of energy that each cell (particle) can take. 
+Version 2 brings a lot more features into the code compared to version 1. Parameters such as Conductivity and Temperature are added into the simulation and the "move probability" or "alpha" is a calculated value where Conductivity is mapped to it via a function. Likewise, the method of using a prompt in order to unput the initial values is replaced with a GUI element using the tkinter library. 
 
-It would be quite interesting to see if I tinker rule 1 in [rules.md](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md) while keeping everything else enforced. 
-
-## Currently working in version 2. 
-Doing some researching of using boltzmann distribution etc, to challenge the assumption of "equal a priori probabilities" becuase version 1 runs on that assumption which is actually incorrect for real life scenarios.  
+The GUI element looks like this: 
+Initial conditions |
+(https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D50%25.gif)| 
