@@ -66,7 +66,14 @@ The source code for running version 2 of Automata is [Engine.py](https://github.
 
 Examples of some of the simulation for version 2 are seen down below: 
 
+Low temperature, medium conductivity  |  High temperature, higher conductivity |  
+:-------------------------:|:-------------------------:|
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/animation_2.gif)  |  ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/animation_3.gif)| 
 
+
+Low Temp, High conductivitiy |
+:-------------------------:
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/animation_1.gif)
 ## Usage 
 To start the code run [run.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/run.py) in your local machine and ensure that you have numpy, matplotlib numba, pandas and tkinter installed.
 At the same time ensure that Engine.py is within the same directory as run.py. After that choose your values through the GUI that pops up and click the "Start Simulation" button to start the animation. 
