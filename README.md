@@ -71,7 +71,7 @@ Low temperature, medium conductivity  |  High temperature, higher conductivity |
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/animation_2.gif)  |  ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/animation_3.gif)| 
 
 
-Low Temp, High conductivitiy |
+Low Temp, High conductivity |
 :-------------------------:
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/animation_1.gif)
 ## Usage 
