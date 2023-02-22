@@ -38,14 +38,6 @@ Once main.py is initialized you will be prompted with the following questions.
  - What sort of shape you want as a start (Rectangle, circle or ellipse)
  - How many frames should the animation run for (Recommended: 300 to 600) 
 
-Then the animation will run accordingly. As a small catch, make sure that your numpy is installed as 1.23.1 otherwise numba wouldn't work at all and your simulation will be incredibly slow. 
- 
-## Dependencies
-- numpy=1.23.1
-- matplotlib=3.6.3
-- pandas=1.53
-- numba=0.56.4
-
 The bug responsible for biased movement in version 1 has been resolved.
 
 ## Version 2 
@@ -54,5 +46,36 @@ While version 1 successfully simulates random movement and brownian motion in so
 Version 2 brings a lot more features into the code compared to version 1. Parameters such as Conductivity and Temperature are added into the simulation and the "move probability" or "alpha" is a calculated value where Conductivity is mapped to it via a function. Likewise, the method of using a prompt in order to unput the initial values is replaced with a GUI element using the tkinter library. 
 
 The GUI element looks like this: 
-Initial conditions |
-(https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D50%25.gif)| 
+Initial inputs |
+:-------------------------:
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/GUI.png)
+
+To use it use the slides to select what sort of variable you want and click the "Start Simulation" button to start the simulation. When the simulation is runned you can no longer change any inputs within the slider but you can make changes into the simulation via the matplotlib window that shows up after. 
+
+Sliders in the matplotlib animation |
+:-------------------------:
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Slider_example.png)
+
+You can click the pause button to stop/resume the simulation and dynamically change the temperature and conductivity and see the results. 
+
+Within the GUI element, the "Terminate" button will delete the matplotlib figure and reset all the buttons. The "Save" button is to save the animation. By default, the animation is saved as a gif labelled "animation.gif" and contains no sliders or buttons in the frames of the gifs. Don't try to click on save when the simulation is running as you will recieve errors. Do the tasks one at a time. 
+
+Computations and the tought process in calculating entropy can be seen [here]
+
+The source code for running version 2 of Automata is [Engine.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/Engine.py). The [run.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/run.py) file runs the entire code and [Plots.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/Plots.py) is meant to do some rudimentary analysis using defined classes in Engine.
+
+Examples of some of the simulation for version 2 are seen down below: 
+
+
+## Usage 
+To start the code run [run.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/run.py) in your local machine and ensure that you have numpy, matplotlib numba, pandas and tkinter installed.
+At the same time ensure that Engine.py is within the same directory as run.py. After that choose your values through the GUI that pops up and click the "Start Simulation" button to start the animation. 
+
+As a small catch, make sure that your numpy is a version that is less than 1.24 Otherwise, the @njit decorator will not work as intended and massively slows down the simulation. 
+ 
+## Dependencies
+- numpy=1.23.5
+- matplotlib=3.6.3
+- pandas=1.53
+- numba=0.56.4
+- tk=8.6.12
