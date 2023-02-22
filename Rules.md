@@ -22,7 +22,7 @@ In version 2 the rules of the problem are:
 
 3. An occupied cell (1-8) transfer its energy to an any cell that is not an 8 within 1 square distance away. 
    - This means that cells containing energy surrounded cells that are not 8s has 8 possible outcomes or 8 ways it can transfer its energy. 
-   - -Either it can go up, down, left, right or any of the 4 diagonals.
+   - - Either it can go up, down, left, right or any of the 4 diagonals.
    - If an 8 cell is completely surrounded by other 8s it can only stay in its place. 
  
 Additional information:
