@@ -1,12 +1,3 @@
-The goal of the problem is to model a random process.
-
-In version 1 rules of the problem are:
-1. A cell within the 2D grid can only take 2 discrete values 1 or 0.
-
-2. The number of 1s within the grid cannot change. This is an analogue of the 1st law of thermodynamics. 
-
-3. An occupied cell (1) can move in a random direction to an empty cell (0) that is 1 unit away. 
-
 In version 2 the rules of the problem are: 
 1. A cell within the 2D grid can take any integer values ranging from 0 to 8.
 
