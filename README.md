@@ -58,9 +58,9 @@ Sliders in the matplotlib animation |
 
 You can click the pause button to stop/resume the simulation and dynamically change the temperature and conductivity and see the results. 
 
-Within the GUI element, the "Terminate" button will delete the matplotlib figure and reset all the buttons. The "Save" button is to save the animation. By default, the animation is saved as a gif labelled "animation.gif" and contains no sliders or buttons in the frames of the gifs. Don't try to click on save when the simulation is running as you will recieve errors. Do the tasks one at a time. 
+Within the GUI element, the "Terminate" button will delete the matplotlib figure and reset all the buttons. The "Save" button is to save the animation. By default, the animation is saved as a gif labelled "animation.gif" and contains no sliders or buttons in the frames of the gifs. To avoid unexpected errors, please try to do the tasks one at a time and not try to save or terminate the simulation when it is running. 
 
-Computations and the tought process in calculating entropy can be seen [here]
+Computations and the tought process in calculating entropy can be seen [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.pdf)
 
 The source code for running version 2 of Automata is [Engine.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/Engine.py). The [run.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/run.py) file runs the entire code and [Plots.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/Plots.py) is meant to do some rudimentary analysis using defined classes in Engine.
 
