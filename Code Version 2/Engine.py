@@ -254,6 +254,9 @@ class move_prob:
                 x=0.01
                 y = (math.sin(k * x)) ** (c / (x ** a))
                 return y
+            elif thermal_conductivity>3000*(math.pi):
+                y=1
+                return y
             else:
                 y=(math.sin(k * x)) ** (c / (x ** a))
                 return y
