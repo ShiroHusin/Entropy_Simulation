@@ -251,7 +251,7 @@ class move_prob:
             if x<0:
                 raise ValueError("Invalid thermal conductivity, conductivity should be a positive number")
             elif thermal_conductivity==0:
-                x=0.01
+                x=0.002
                 y = (math.sin(k * x)) ** (c / (x ** a))
                 return y
             elif thermal_conductivity>3000*(math.pi):
