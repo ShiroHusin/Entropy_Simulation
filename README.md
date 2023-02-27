@@ -86,16 +86,4 @@ At this stage, I could use a logistic function or $\large \tanh (x)$ but those 2
 
 $$\large g(c)=\sin (\frac{1}{6000}c)^\frac{0.2}{0.1^c}$$
 
-I can then construct a peice-wise function for 3 scenarios where: 
-
-\begin{equation}
-\alpha = 
-     \begin{cases}
-       1 & \quad\text{if} \;\; c>3000\pi \\
-       sin(\frac{1}{6000}c)^\frac{0.2}{0.1^c} &\quad\text{if} \;\; 0 < c \leq 3000\pi \\
-       ~0.014 &\quad\text{if} \;\; c=0 \\
-       \text{undefined} &\quad\text{if} \;\; c<0 \\ 
-     \end{cases}
-\end{equation}
-
-
+I can then construct a peice-wise function for 3 scenarios where $\large \alpha$ is equal 1 if $\large c>3000\pi$, else if $\large 0 < c \leq 3000\pi$ then $\large \alpha=g(c)$, else if c=0 then $\large \alpha=0.014$. For for some reason, c is put as a negative, then a ValueError is raised because I don't think negative conductivity can ever exist.
