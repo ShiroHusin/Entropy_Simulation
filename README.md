@@ -55,3 +55,12 @@ Now that the rules of movement are done, we now get to the meaty part which is h
 $$\large S=k_{b}Ln(\Omega)$$ 
 
 Our job is to find a way to compute $\large \Omega$. Yes simple right? But now what?  
+For this problem I spent quite a long time thinking and trying to find information throughout the internet to find clues on how to compute $\large \Omega$ for this specific problem. Of course, I asked ChatGPT as well to give me suggestions but spoiler alert that conversation was fruitless as it gave me suggestions that just made everthing much harder. After some despairing, It was late at night when my monkey brain thought of a strategy to do this. Remembering the excellent video that I watched ParthG made on [entropy](https://www.youtube.com/watch?v=mg0hueOyoAw&ab_channel=ParthG). I knew that the method requires me to do something related to counting the total number of integer combinations possible that adds up to a number. Hence I thought, rather than computing the entire grid which would be insane to do, what if I break the grid down into smaller byte sized chunks or 2x2 matrices as follows: 
+
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/matrix_splitting.png)
+
+For now, consider the fact that the middle matrix is the grid simulation itself and lets call each of the sub-matrices as $\large X_{j}$ and allow the grid to be square in shape and have its dimensions to be solely even integers. From simple math, we can deduce that there should be $\large \frac{l^2}{4}$ different sub-matrices or $\large X_{j}$. Now, there are 4 cells within each element in $\large X_{j}$. Lets call this a, b, c, d. Noting that each cell can only be 0-8. This means that the energy level for each sub-matrix $X_{j}$ must range from 0-32. If we call this as $\large \Phi_{j}$, it means that: 
+
+$$\large 0\leq \Phi_{j} \leq 32, \;\;\; \Phi_{j} \in \mathbb{Z} $$ 
+Additionally, we have to find the total number of integer combinations possible for: 
+$$\large  a_{j}+b_{j}+c_{j}+d_{j}=\Phi_{j}$$
