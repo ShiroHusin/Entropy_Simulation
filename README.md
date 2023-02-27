@@ -32,11 +32,11 @@ One thing that is missing is the fact that energy will always want to occupy the
 ## A tweak on the rules of movement 
 Enter the boltzmann factor, or some form of it. According to wikipedia the boltzmann factor is defined as: 
 
-$$\frac{p_{i}}{p_{j}}=e^{\dfrac{\epsilon_{j}-\epsilon_{i}}{kT}}$$
+$$\large \frac{p_{i}}{p_{j}}=e^{\dfrac{\epsilon_{j}-\epsilon_{i}}{kT}}$$
 
 
 In this case the probability fraction tells us the probability that something is at state i divided by state j is equal to all the other stuff. After doing a bunch or reading, I decided that this concept is useful in solving my problem. However, it isn't all that clear on how am I going to apply this. For instance the fractions don't seem to help very much in explicity changing the probabilities. After much debate, I decided to do a little bit of a hack. This might be completely illegal to do but I decided to modify the equation to be: 
 
-$$p_{j}=e^{\dfrac{8-\epsilon_{j}}{T}}$$
+$$\large p_{j}=e^{\dfrac{8-\epsilon_{j}}{T}}$$
 
 
