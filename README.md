@@ -10,10 +10,15 @@ I had a lot of fun in making this project and since I'm still not sure whether I
 
 ## Dependencies
 -Python 3.10 or above 
+
 -NumPy 1.23.5 
+
 -Pandas 1.5.2
+
 -Matplotlib 3.6.2
+
 -Numba 0.56.4 
+
 -Tkinter 8.6.12
 Note that you can use newer versions of the packages listed above except for NumPy as NumPy 1.24 runs into errors with the numba JIT compiler. 
 
