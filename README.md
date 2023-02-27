@@ -100,7 +100,7 @@ I can then construct a peice-wise function for 3 scenarios where $\large \alpha$
 
 While $\large K\leq I$ where $\large I$ is the number of iterations, do the following:
 
-$\large a$ is the elements and I want it such that for all non zero elements of a within grid $\large M$ to first be filtered out by the random number generator and then apply the rules for movement. After that is compiled to a new grid $\large M_{K+1}$, I want it to also compute the entropy via the function $\large S(M_{k+1}$ and which is inferred from the microstate dictionary or dataframe. This will form 1 datapoint in the graph. Once thats done add 1 to k and repeat it all over again. 
+$\large a$ is the elements and I want it such that for all non zero elements of a within grid $\large M$ to first be filtered out by the random number generator and then apply the rules for movement. After that is compiled to a new grid $\large M_{K+1}$, I want it to also compute the entropy via the function $\large S(M_{k+1})$ and the microstates is inferred from the microstate dictionary or dataframe. This will form 1 datapoint in the graph. Once thats done add 1 to k and repeat it all over again unitl $\large k=I$ 
 
 ## Usage <a name="use"></a>
 Now, at this point I was happy with how things are going. However, from version 1, I thought that inputting the initial conditions into the Python prompt over and over gain to be very annoying. Hence I decided to replace it with a GUI control panel using Tkinter. The example is shown here: 
