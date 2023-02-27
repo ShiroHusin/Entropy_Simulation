@@ -22,7 +22,7 @@ As cellular automata is the central idea behind the simulation. It is important 
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/image.png)
 
-At this point one can postulate that the reules of movement are $\frac{1}{7}$ each and that its done right? 
+At this point one can postulate that the energy from the 6 cell can go to the grey cell at $\frac{1}{7}$ each right?
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/acutally_no.gif)
 
