@@ -27,3 +27,10 @@ At this point one can postulate that the energy from the 6 cell can go to the gr
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/acutally_no.gif)
 
 One thing that is missing is the fact that energy will always want to occupy the particles that are of lowest energy first before going somewhere else. For instance, in chemistry the electron addition into ions don't go in the order of 4s, 4p but instead go in the order of 4s, 3d and then 4p. Hence, I needed some way to modify the probabilities.  
+
+
+## A tweak on the rules of movement 
+Enter the boltzmann factor, or some form of it. According to wikipedia the boltzmann factor is defined as: 
+$$\frac{p_{i}}{p_{j}}=e^{\dfrac{\epsilon_{j}-\epsilon_{i}}{kT}}$$
+
+In this case the probability fraction tells us the probability that something is at state i divided by state j is equal to the other stuff. 
