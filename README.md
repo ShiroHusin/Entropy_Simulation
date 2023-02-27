@@ -67,7 +67,7 @@ Additionally, we have to find the total number of integer combinations possible 
 
 $$\large  a_{j}+b_{j}+c_{j}+d_{j}=\Phi_{j}$$
 
-Fortunately, this problem is not too hard to solve. As there are hundreds of examples from Stack Overflow. For each value of $\large \Phi_{j}$ ranging from 0 to 32. The total number of viable integer combinations is the microstate associated associated with $\large \Phi_{j}$. Lets call this value $\large \omega_{j}$. Some examples of these values can be seen in the table below 
+Fortunately, this problem is not too hard to solve. As there are hundreds of examples from Stack Overflow. For each value of $\large \Phi_{j}$ ranging from 0 to 32. The total number of viable integer combinations is the microstate associated associated with $\large \Phi_{j}$. Lets call this value $\large \omega_{j}$. Some examples of these values can be seen in the table below and all the computer needs is to match the $\large \Phi_{j}$ value for each sub-matrix $X_{j}$ through a pandas dataframe or dictionary.
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/microstate_table.png)
 
@@ -78,3 +78,24 @@ $$\large \Omega=\prod_{j=1}^{\frac{l^2}{4}} \omega_{j} $$
 For large grids, I might run into float32 errors in python as the numbers can get way to big. However, using the product rules in logartihms we can write the entropy equation as: 
 
 $$\large \dfrac{S}{k_{b}}=\sum_{j=1}^{\frac{l^2}{4}} ln(\omega_{j})$$
+
+## Other dynamically changing parameter 
+Now at this point, I was quite happy with the fact that I've cracked the nut. However, I wanted to include 1 more idea within the simulation in whuch the user can dynamically change. It's here when I thought you could actually try to put conductivity as well. In the older version called [Code](https://github.com/ShiroHusin/Entropy_Simulation/tree/main/Code). I had already implemented a parameter called $\large \alpha$ or move probability. This parameter controls the rate at which the code responsible for moving the numbers of the cells is executed. Now I figured that this has could be related to how "conductive" my grid is. At least my intuition told me so. Hence, I decided that I should have a function which maps conductivity to $\large \alpha$ wjere alpha can only range from 0 to 1. 
+
+At this stage, I could use a logistic function or $\large \tanh (x)$ but those 2 functions did not really provide me with the characteristics I would like. Hence, Namely, I wanted a function that grew quite fast from 0=100 and grows at an ever slower rate to 1 but to 1 it goes. This is where GeoGebra proved useful and I decided to use a custom sin(x) function after playing around with the graphs. So If I define:
+
+$$\large g(c)=\sin (\frac{1}{6000}c)^\frac{0.2}{0.1^c}$$
+
+I can then construct a peice-wise function for 3 scenarios where: 
+
+\begin{equation}
+\alpha = 
+     \begin{cases}
+       1 & \quad\text{if} \;\; c>3000\pi \\
+       sin(\frac{1}{6000}c)^\frac{0.2}{0.1^c} &\quad\text{if} \;\; 0 < c \leq 3000\pi \\
+       ~0.014 &\quad\text{if} \;\; c=0 \\
+       \text{undefined} &\quad\text{if} \;\; c<0 \\ 
+     \end{cases}
+\end{equation}
+
+
