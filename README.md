@@ -109,7 +109,7 @@ Now, at this point I was happy with how things are going. However, from version 
 
 The GUI element shows sliders for parameters as grid length, conductivity, and temperature. 
 
-At the current momeent there are only 3 choices or starting shapes that you start with either "circle", "ellipse" or "rectangle". Once you have selected all the parameters you can then start the simulation by clicking the "Start Simulation" button. The "save" button saves the simulation as a gif in a file named "animation.gif" and the "Terminate" button halts the simulation. Once you click the "Start Simulation" button you will not be able to select or move any other sliders except the "Terminate" button which will reset all functiionality. Make sure that you do 1 task at a time because you might run into errors if try to do too many things at once. 
+At the current moment there are only 3 choices or starting shapes that you start with either "circle", "ellipse" or "rectangle". Once you have selected all the parameters you can then start the simulation by clicking the "Start Simulation" button. The "save" button saves the simulation as a gif in a file named "animation.gif" and the "Terminate" button halts the simulation. Once you click the "Start Simulation" button you will not be able to select or move any other sliders except the "Terminate" button which will reset all functiionality. Make sure that you do 1 task at a time because you might run into errors if try to do too many things at once. 
 
 Once the simulation is started you can actually change 2 parameters while the simulation is running. These are the "Temperature" and "Conductivity". The sliders which allow you to change the simulation is shown in this picture below: 
 
