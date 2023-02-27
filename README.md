@@ -1,4 +1,4 @@
-# Visualizing entropy through cellular automata
+## Visualizing entropy through cellular automata <a name="introduction"></a>
 
 During the holiday season, I was reading Conway's game of life in wikipedia and rewatching Vertiasium's excellent video about [Math's fundamental flaw](https://www.youtube.com/watch?v=HeQX2HjkcNo&ab_channel=Veritasium). Likewise, I wanted to do something productive during the holiday season and learn the fundamentals of Python through doing coding projects. From what I remember I think its about January the 1st or 2nd late at night when an idea popped in my mind. The question I asked was what if I borrowed some concepts from cellular automata to visualise and show what entropy is? Given the fact that quite a lot of people are unaware of this fascinating concept in Physics, I wanted to do a project that hopefully makes it a bit easier to see whats going on when entropy increases. After long hours of thinking and strategising what approach to take, I came up with this gif as the final form: 
 
@@ -8,7 +8,7 @@ Entropy visualisation|
 
 I had a lot of fun in making this project and since I'm still not sure whether I "get" it. I figured that I should explain step by step and what I did to bring the idea into life. 
 
-## Dependencies
+# Dependencies
 - Python 3.10 
 - NumPy 1.23.5 
 - Pandas 1.5.2
@@ -18,7 +18,7 @@ I had a lot of fun in making this project and since I'm still not sure whether I
 
 Note that you can use newer versions of the packages listed above except for NumPy as NumPy 1.24 runs into errors with the numba JIT compiler. 
 
-## Deciding on the rules
+## Deciding on the rules <a name="Rules"></a>
 As cellular automata is the central idea behind the simulation. It is important to decide first on what the rules are. Just like in any physical system I wanted the rules to mirror the conservation of energy and another rule for movement of energy. Earlier versions of the simulation allowed for the cells to either be binary digits of 1 and 0 while later versions of the cells allowed for discrete values ranging from 0 to 8. The rules for version 1 and 2 are within this [link](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md) and this [link](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Rules.md). Bascially the idea is the sum of all the numbers inside the grid cannot change over time and every non zero number can change one of its 8 neighbouring value. For instance, in picture below,the cell labelled 6 can go to any one of its grey squares and but it cannot go to the 8 cell because its occupied and 8 is the maximum value it can reach.  
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/image.png)
@@ -30,7 +30,7 @@ At this point one can postulate that a unit of energy from the 6 cell can go to 
 After running some prototypes, I noticed that something looks seriously wrong, where the grid animations seem to scream at me that a feature was missing. What was missing is the fact that energy will always want to occupy the particles that are of lowest energy first before going somewhere else. For instance, in chemistry the electron addition into ions don't go in the order of 4s, 4p but instead go in the order of 4s, 3d and then 4p. Hence, I needed some way to modify the probabilities.  
 
 
-## A tweak on the rules of movement 
+## A tweak on the rules of movement <a name="Movement"></a>
 Enter the boltzmann factor, or some form of it. According to wikipedia the boltzmann factor is defined as: 
 
 $$\large \frac{p_{i}}{p_{j}}= \large e^{\dfrac{\epsilon_{j}-\epsilon_{i}}{kT}}$$
@@ -49,7 +49,7 @@ For the case above $\large \kappa$=7 as there are only 7 viable cells that it ca
 
 Assuming that T=1, there is a 63.3% chance that the 6 cell gives up a unit of energy to the 0 cell and a 23.3% chance that the 6 cell transfers a unit of energy to the 1 cell. Likewise, the chances that the 6 cell sends a unit of energy to the 7 cell is close to 0. 
 
-## Calculating entropy
+## Calculating entropy <a name="Entropy"></a>
 Now that the rules of movement are done, we now get to the meaty part which is how am I suppose to compute entropy? Before we start lets get back to the basics. The boltzmann equation to compute entropy is written as: 
 
 $$\large S=k_{b}Ln(\Omega)$$ 
@@ -79,8 +79,8 @@ For large grids, I might run into float32 errors in python as the numbers can ge
 
 $$\large \dfrac{S}{k_{b}}=\sum_{j=1}^{\frac{l^2}{4}} ln(\omega_{j})$$
 
-## Other dynamically changing parameter 
-Now at this point, I was quite happy with the fact that I've cracked the nut. However, I wanted to include 1 more idea within the simulation in whuch the user can dynamically change. It's here when I thought you could actually try to put conductivity as well. In the older version called [Code](https://github.com/ShiroHusin/Entropy_Simulation/tree/main/Code). I had already implemented a parameter called $\large \alpha$ or move probability. This parameter controls the rate at which the code responsible for moving the numbers of the cells is executed. Now I figured that this has could be related to how "conductive" my grid is. At least my intuition told me so. Hence, I decided that I should have a function which maps conductivity to $\large \alpha$ wjere alpha can only range from 0 to 1. 
+## Other dynamically changing parameter <a name="Other"></a>
+Now at this point, I was quite happy with the fact that I've cracked the nut. However, I wanted to include 1 more idea within the simulation in whuch the user can dynamically change. It's here when I thought you could actually try to put conductivity as well. In the older version where the code is in [here](https://github.com/ShiroHusin/Entropy_Simulation/tree/main/Code). I had already implemented a parameter called $\large \alpha$ or move probability. This parameter controls the rate at which the code responsible for moving the numbers of the cells is executed. Now I figured that this has could be related to how "conductive" my grid is. At least my intuition told me so. Hence, I decided that I should have a function which maps conductivity to $\large \alpha$ wjere alpha can only range from 0 to 1. 
 
 At this stage, I could use a logistic function or $\large \tanh (x)$ but those 2 functions did not really provide me with the characteristics I would like. Namely, I wanted a function that grew quite fast from 0=100 and grows at an ever slower rate to 1 but to 1 it goes. This is where GeoGebra proved useful and I decided to use a custom sin(x) function after playing around with the graphs. So If I define:
 
@@ -94,4 +94,19 @@ While $\large K\leq I$ where $\large I$ is the number of iterations, do the foll
 
 $\large a$ is the elements and I want it such that for all non zero elements of a within grid $\large M$ to first be filtered out by the random number generator and then apply the rules for movement. After that is compiled to a new grid $\large M_{K+1}$, I want it to also compute the entropy via the function $\large S(M_{k+1}$ and which is inferred from the microstate dictionary or dataframe. This will form 1 datapoint in the graph. Once thats done add 1 to k and repeat it all over again. 
 
+## Usage <a name="use"></a>
+Now, at this point I was happy with how things are going. However, from version 1, I thought that inputting the initial conditions into the Python prompt over and over gain to be very annoying. Hence I decided to replace it with a GUI control panel using Tkinter. The example is shown here: 
 
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/GUI.png)
+
+The GUI element shows sliders for parameters as grid length, conductivity, and temperature. 
+
+At the current momeent there are only 3 choices or starting shapes that you start with either "circle", "ellipse" or "rectangle". Once you have selected all the parameters you can then start the simulation by clicking the "Start Simulation" button. The "save" button saves the simulation as a gif in a file named "animation.gif" and the "Terminate" button halts the simulation. Once you click the "Start Simulation" button you will not be able to select or move any other sliders except the "Terminate" button which will reset all functiionality. Make sure that you do 1 task at a time because you might run into errors if try to do too many things at once. 
+
+Once the simulation is started you can actually change 2 parameters while the simulation is running. These are the "Temperature" and "Conductivity". The sliders which allow you to change the simulation is shown in this picture below: 
+
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Slider_example.png)
+
+Finally, as a side note try not to use a potato pc as it would struggle a lot in trying to run this whole thing for large grids :)
+
+As a closing remark, I hope that what I did here helps people to understand a little bit more about what entropy is and its significance within the natural world. As a said, I'm actually still suspicious on whether or not I implemented the physics correctly and I would be happy to change a part if it turns out to be wrong. Note that I'm not a physics major and I also never took a Statistical Mechanics course. However, I had an idea and I wanted to bring it to life no matter what as the first 22 years felt dissapointing in my mind. 
