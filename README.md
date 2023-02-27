@@ -82,8 +82,15 @@ $$\large \dfrac{S}{k_{b}}=\sum_{j=1}^{\frac{l^2}{4}} ln(\omega_{j})$$
 ## Other dynamically changing parameter 
 Now at this point, I was quite happy with the fact that I've cracked the nut. However, I wanted to include 1 more idea within the simulation in whuch the user can dynamically change. It's here when I thought you could actually try to put conductivity as well. In the older version called [Code](https://github.com/ShiroHusin/Entropy_Simulation/tree/main/Code). I had already implemented a parameter called $\large \alpha$ or move probability. This parameter controls the rate at which the code responsible for moving the numbers of the cells is executed. Now I figured that this has could be related to how "conductive" my grid is. At least my intuition told me so. Hence, I decided that I should have a function which maps conductivity to $\large \alpha$ wjere alpha can only range from 0 to 1. 
 
-At this stage, I could use a logistic function or $\large \tanh (x)$ but those 2 functions did not really provide me with the characteristics I would like. Hence, Namely, I wanted a function that grew quite fast from 0=100 and grows at an ever slower rate to 1 but to 1 it goes. This is where GeoGebra proved useful and I decided to use a custom sin(x) function after playing around with the graphs. So If I define:
+At this stage, I could use a logistic function or $\large \tanh (x)$ but those 2 functions did not really provide me with the characteristics I would like. Namely, I wanted a function that grew quite fast from 0=100 and grows at an ever slower rate to 1 but to 1 it goes. This is where GeoGebra proved useful and I decided to use a custom sin(x) function after playing around with the graphs. So If I define:
 
 $$\large g(c)=\sin (\frac{1}{6000}c)^\frac{0.2}{0.1^c}$$
 
-I can then construct a peice-wise function for 3 scenarios where $\large \alpha$ is equal 1 if $\large c>3000\pi$, else if $\large 0 < c \leq 3000\pi$ then $\large \alpha=g(c)$, else if c=0 then $\large \alpha=0.014$. For for some reason, c is put as a negative, then a ValueError is raised because I don't think negative conductivity can ever exist.
+I can then construct a peice-wise function for 3 scenarios where $\large \alpha$ is equal 1 if $\large c>3000\pi$, else if $\large 0 < c \leq 3000\pi$ then $\large \alpha=g(c)$, else if c=0 then $\large \alpha=0.014$. If for for some reason, c is put as a negative, then a ValueError is raised because I don't think negative conductivity can ever exist. Finally to sum, up the entire code structure would probably look close to this diagram: 
+
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Process_flow_diagram.png)
+
+While $\large K\leq I$ where $\large I$ is the number of iterations, do the following: 
+$\large a$ is the elements and I want it such that for all non zero elements of a within grid $\large M$ to first be filtered out by the random number generator and then apply the rules for movement. After that is compiled to a new grid $\large M_{K+1}$, I want it to also compute the entropy via the function $\large S(M_{k+1}$ and which is inferred from the microstate dictionary or dataframe. This will form 1 datapoint in the graph. Once thats done add 1 to k and repeat it all over again. 
+
+
