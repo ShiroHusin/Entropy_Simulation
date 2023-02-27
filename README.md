@@ -90,7 +90,8 @@ I can then construct a peice-wise function for 3 scenarios where $\large \alpha$
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Process_flow_diagram.png)
 
-While $\large K\leq I$ where $\large I$ is the number of iterations, do the following: 
+While $\large K\leq I$ where $\large I$ is the number of iterations, do the following:
+
 $\large a$ is the elements and I want it such that for all non zero elements of a within grid $\large M$ to first be filtered out by the random number generator and then apply the rules for movement. After that is compiled to a new grid $\large M_{K+1}$, I want it to also compute the entropy via the function $\large S(M_{k+1}$ and which is inferred from the microstate dictionary or dataframe. This will form 1 datapoint in the graph. Once thats done add 1 to k and repeat it all over again. 
 
 
