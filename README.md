@@ -117,4 +117,16 @@ Once the simulation is started you can actually change 2 parameters while the si
 
 Finally, as a side note try not to use a potato pc as it would struggle a lot in trying to run this whole thing for large grids :)
 
-As a closing remark, I hope that what I did here helps people to understand a little bit more about what entropy is and its significance within the natural world. As a said, I'm actually still suspicious on whether or not I implemented the physics correctly and I would be happy to change a part if it turns out to be wrong. Note that I'm not a physics major and I also never took a Statistical Mechanics course. However, I had an idea and I wanted to bring it to life no matter what as the first 22 years felt dissapointing in my mind. 
+As a closing remark, I hope that what I did here helps people to understand a little bit more about what entropy is and its significance within the natural world. As a said, I'm actually still suspicious on whether or not I implemented the physics correctly and I would be happy to change a part if it turns out to be wrong. Note that I'm not a physics major and I also never took a Statistical Mechanics course. However, I had an idea and I wanted to bring it to life no matter what as the first 22 years felt dissapointing in my mind. Finally, here are some more examples on how things look in version 2 and 1 respectively. 
+
+Version 2:
+Simulation 1 |  Simulation 2 
+:-------------------------:|:-------------------------:
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/animation_2.gif)  |  ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/animation_3.gif)
+
+Version 1:
+Simulation 1 |  Simulation 2 
+:-------------------------:|:-------------------------:
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D89%25.gif)  |  ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D10%25.gif)
+
+
