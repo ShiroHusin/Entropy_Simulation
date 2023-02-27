@@ -130,3 +130,6 @@ Simulation 1 |  Simulation 2
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D89%25.gif)  |  ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/Entropy_alpha%3D10%25.gif)
 
 
+For additional information, please see the documents that I have written in [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Thoughts.pdf) for version 1 and [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Entropy_Computation.pdf) on the method in which I calculated entropy. 
+
+For version 2, please see this [document](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.pdf) for additional information.
