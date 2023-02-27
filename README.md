@@ -22,7 +22,7 @@ As cellular automata is the central idea behind the simulation. It is important 
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/image.png)
 
-At this point one can postulate that the energy from the 6 cell can go to the grey cell at $\frac{1}{7}$ each right?
+At this point one can postulate that a unit of energy from the 6 cell can go to the grey cell at $\frac{1}{7}$ each right?
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/acutally_no.gif)
 
@@ -38,5 +38,12 @@ $$\large \frac{p_{i}}{p_{j}}= \large e^{\dfrac{\epsilon_{j}-\epsilon_{i}}{kT}}$$
 In this case the probability fraction tells us the probability that something is at state i divided by state j is equal to all the other stuff. After doing a bunch or reading, I decided that this concept is useful in solving my problem. However, it isn't all that clear on how am I going to apply this. For instance the fractions don't seem to help very much in explicity changing the probabilities. After much debate, I decided to do a little bit of a hack. This might be completely illegal to do but I decided to modify the equation to be: 
 
 $$\large p_{j}= \large e^{\dfrac{8-\epsilon_{j}}{T}}$$
+
+In this way we can calculate the individual cell's boltzmann factor by computing how far is it from the maximum energy value of 8. Likewise, I also decided to remove to the boltzmann constant $k_{b}$ so that any change in this parameter will easily change the outcome of the simulation. After thats done we can add all of them up similar to the partision function formalized as: 
+
+$$\large \sum_{j=1}^{\kappa} e^{\frac{8-\epsilon_{j}}{T}}  $$
+For the case above $\large \kappa$=7 as there are only 7 viable cells that it can go to. After doing some maths the probabilities of where each unit of energy can go to is: 
+
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/modified_probs.png)
 
 
