@@ -62,5 +62,19 @@ For this problem I spent quite a long time thinking and trying to find informati
 For now, consider the fact that the middle matrix is the grid simulation itself and lets call each of the sub-matrices as $\large X_{j}$ and allow the grid to be square in shape and have its dimensions to be solely even integers. From simple math, we can deduce that there should be $\large \frac{l^2}{4}$ different sub-matrices or $\large X_{j}$. Now, there are 4 cells within each element in $\large X_{j}$. Lets call this a, b, c, d. Noting that each cell can only be 0-8. This means that the energy level for each sub-matrix $X_{j}$ must range from 0-32. If we call this as $\large \Phi_{j}$, it means that: 
 
 $$\large 0\leq \Phi_{j} \leq 32, \Phi_{j} \in \mathbb{Z} $$ 
+
 Additionally, we have to find the total number of integer combinations possible for: 
+
 $$\large  a_{j}+b_{j}+c_{j}+d_{j}=\Phi_{j}$$
+
+Fortunately, this problem is not too hard to solve. As there are hundreds of examples from Stack Overflow. For each value of $\large \Phi_{j}$ ranging from 0 to 32. The total number of viable integer combinations is the microstate associated associated with $\large \Phi_{j}$. Lets call this value $\large \omega_{j}$. Some examples of these values can be seen in the table below 
+
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/microstate_table.png)
+
+Now due to the basic counting principles in math. The total amount of configurations that the grid can take is: 
+
+$$\large \Omega=\prod_{j=1}^{\frac{l^2}{4}} \omega_{j} $$ 
+
+For large grids, I might run into float32 errors in python as the numbers can get way to big. However, using the product rules in logartihms we can write the entropy equation as: 
+
+$$\large \dfrac{S}{k_{b}}=\sum_{j=1}^{\frac{l^2}{4}} ln(\omega_{j})$$
