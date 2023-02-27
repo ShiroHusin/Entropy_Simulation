@@ -1,6 +1,14 @@
+# Table of contents
+1. [Introduction](#introduction)
+2. [Deciding the rules](#Rules)
+3. [Rules of movement](#Movement)
+4. [Computing entropy](#Entropy)
+5. [Other parameters](#Other)
+6. [Usage](#use)
+
 ## Visualizing entropy through cellular automata <a name="introduction"></a>
 
-During the holiday season, I was reading Conway's game of life in wikipedia and rewatching Vertiasium's excellent video about [Math's fundamental flaw](https://www.youtube.com/watch?v=HeQX2HjkcNo&ab_channel=Veritasium). Likewise, I wanted to do something productive during the holiday season and learn the fundamentals of Python through doing coding projects. From what I remember I think its about January the 1st or 2nd late at night when an idea popped in my mind. The question I asked was what if I borrowed some concepts from cellular automata to visualise and show what entropy is? Given the fact that quite a lot of people are unaware of this fascinating concept in Physics, I wanted to do a project that hopefully makes it a bit easier to see whats going on when entropy increases. After long hours of thinking and strategising what approach to take, I came up with this gif as the final form: 
+During the holiday season, I was reading Conway's game of life in wikipedia and rewatching Vertiasium's excellent video about [Math's fundamental flaw](https://www.youtube.com/watch?v=HeQX2HjkcNo&ab_channel=Veritasium). Likewise, its been 5 months when I started to take programming seriously and I wanted to do something productive during the holiday season by doing coding projects. From what I remember I think its about January the 1st or 2nd late at night when an idea popped in my mind. The question I asked was what if I borrowed some concepts from cellular automata to visualise and show what entropy is? Given the fact that quite a lot of people are unaware of this fascinating concept in Physics, I wanted to do a project that hopefully makes it a bit easier to see whats going on when entropy increases. After long hours of thinking and strategising what approach to take, I came up with this gif as the final form: 
 
 Entropy visualisation|
 :-------------------------:
