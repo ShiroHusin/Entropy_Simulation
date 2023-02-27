@@ -23,11 +23,11 @@ As cellular automata is the central idea behind the simulation. It is important 
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/image.png)
 
-At this point one can postulate that a unit of energy from the 6 cell can go to the grey cell at $\frac{1}{7}$ each right?
+At this point one can postulate that a unit of energy from the 6 cell can go to the grey cells at $\frac{1}{7}$ each right?
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/acutally_no.gif)
 
-One thing that is missing is the fact that energy will always want to occupy the particles that are of lowest energy first before going somewhere else. For instance, in chemistry the electron addition into ions don't go in the order of 4s, 4p but instead go in the order of 4s, 3d and then 4p. Hence, I needed some way to modify the probabilities.  
+After running some prototypes, I noticed that something looks seriously wrong, where the grid animations seem to scream at me that a feature was missing. What was missing is the fact that energy will always want to occupy the particles that are of lowest energy first before going somewhere else. For instance, in chemistry the electron addition into ions don't go in the order of 4s, 4p but instead go in the order of 4s, 3d and then 4p. Hence, I needed some way to modify the probabilities.  
 
 
 ## A tweak on the rules of movement 
@@ -48,3 +48,10 @@ For the case above $\large \kappa$=7 as there are only 7 viable cells that it ca
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/modified_probs.png)
 
 Assuming that T=1, there is a 63.3% chance that the 6 cell gives up a unit of energy to the 0 cell and a 23.3% chance that the 6 cell transfers a unit of energy to the 1 cell. Likewise, the chances that the 6 cell sends a unit of energy to the 7 cell is close to 0. 
+
+## Calculating entropy
+Now that the rules of movement are done, we now get to the meaty part which is how am I suppose to compute entropy? Before we start lets get back to the basics. The boltzmann equation to compute entropy is written as: 
+
+$$\large S=k_{b}Ln(\Omega)$$ 
+
+Our job is to find a way to compute $\large \Omega$. Yes simple right? But now what?  
