@@ -50,10 +50,11 @@ In this case the probability fraction tells us the probability that something is
 
 $$\large p_{j}= \large e^{\dfrac{8-\epsilon_{j}}{T}}$$
 
-In this way we can calculate the individual cell's boltzmann factor by computing how far is it from the maximum energy value of 8. Likewise, I also decided to remove to the boltzmann constant $k_{b}$ so that any change in this parameter will easily change the outcome of the simulation. After thats done we can add all of them up similar to the partision function formalized as: 
+In this equation, j represeents the cells wiithin the neighbours and $\large \epsilon_{j}$ tells us the energy of the cell. An implicit assumption I made is that this equation doesn't care about what energy level the cell in question is but only cares about its 8 neighbouring elements. In this way we can calculate the individual cell's boltzmann factor by computing how far is it from the maximum energy value of 8. Likewise, I also decided to remove to the boltzmann constant $k_{b}$ so that any change in this parameter will easily change the outcome of the simulation. After thats done we can add all of them up similar to the partision function formalized as: 
 
 $$\large \sum_{j=1}^{\kappa} e^{\frac{8-\epsilon_{j}}{T}}  $$
-For the case above $\large \kappa$=7 as there are only 7 viable cells that it can go to. After doing some maths the probabilities of where each unit of energy can go to is: 
+
+For the case above $\large \kappa$=7 as there are only 7 viable cells that it can go to and the 8 cell can be filtered out through boolean indexing. After doing some maths the probabilities of where each unit of energy can go to is: 
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/modified_probs.png)
 
