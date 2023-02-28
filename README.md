@@ -46,7 +46,7 @@ Enter the boltzmann factor, or some form of it. According to wikipedia the boltz
 $$\large \frac{p_{i}}{p_{j}}= \large e^{\dfrac{\epsilon_{j}-\epsilon_{i}}{kT}}$$
 
 
-In this case the probability fraction tells us the probability that something is at state i divided by state j is equal to all the other stuff. After doing a bunch or reading, I decided that this concept is useful in solving my problem. However, it isn't all that clear on how am I going to apply this. For instance the fractions don't seem to help very much in explicity changing the probabilities. After much debate, I decided to do a little bit of a hack. This might be completely illegal to do but I decided to modify the equation to be: 
+In this case the probability fraction tells us the probability that something is at state i divided by state j is equal to all the other stuff. After doing a bunch of reading, I decided that this concept is useful in solving my problem. However, it isn't all that clear on how am I going to apply this. For instance the fractions don't seem to help very much in explicity changing the probabilities. After much debate, I decided to do a little bit of a hack. This might be completely illegal to do but I decided to modify the equation to be: 
 
 $$\large p_{j}= \large e^{\dfrac{8-\epsilon_{j}}{T}}$$
 
