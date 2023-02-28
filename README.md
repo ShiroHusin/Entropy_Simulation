@@ -8,7 +8,9 @@
 
 ## Visualizing entropy through cellular automata <a name="introduction"></a>
 
-During the holiday season, I was reading Conway's game of life in wikipedia and rewatching Vertiasium's excellent video about [Math's fundamental flaw](https://www.youtube.com/watch?v=HeQX2HjkcNo&ab_channel=Veritasium). Likewise, its been 5 months when I started to take programming seriously and I wanted to do something productive by doing coding projects. From what I remember I think its about January the 1st or 2nd late at night when an idea popped in my mind. The question I asked was what if I borrowed some concepts from cellular automata to visualise and show what entropy is? Given the fact that quite a lot of people are unaware of this fascinating concept in Physics, I wanted to do a project that hopefully makes it a bit easier to see whats going on when entropy increases. After long hours of thinking and strategising what approach to take, I came up with this gif as the final form: 
+During the holiday season, I was reading Conway's game of life in wikipedia and rewatching Vertiasium's excellent video about [Math's fundamental flaw](https://www.youtube.com/watch?v=HeQX2HjkcNo&ab_channel=Veritasium). Likewise, its been 5 months when I started to take programming seriously and I wanted to do something productive by doing coding projects. From what I remember I think its about January the 1st or 2nd late at night when an idea popped in my mind. <strong> The question I asked was what if I borrowed some concepts from cellular automata to visualise and show what entropy is? </strong> This question was the fundamental driving force that I want answered.
+
+Likewise, given the fact that quite a lot of people are unaware of this fascinating concept in Physics, I wanted to do a project that hopefully makes it a bit easier to see whats going on when entropy increases. After long hours of thinking and strategising what approach to take, I came up with this gif as the final form: 
 
 Entropy visualisation|
 :-------------------------:
@@ -27,7 +29,7 @@ I had a lot of fun in making this project and since I'm still not sure whether I
 Note that you can use newer versions of the packages listed above except for NumPy as NumPy 1.24 runs into errors with the numba JIT compiler. 
 
 ## Deciding on the rules <a name="rules"></a>
-As cellular automata is the central idea behind the simulation. It is important to decide first on what the rules are. Just like in any physical system I wanted the rules to mirror the conservation of energy and another rule for movement of energy. Earlier versions of the simulation allowed for the cells to either be binary digits of 1 and 0 while later versions of the cells allowed for discrete values ranging from 0 to 8. The rules for version 1 and 2 are within this [link](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md) and this [link](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Rules.md). Basically the idea is the sum of all the numbers inside the grid cannot change over time and every non zero number can change one of its 8 neighbouring value. For instance, in picture below,the cell labelled 6 can go to any one of its grey squares and but it cannot go to the 8 cell because its occupied and 8 is the maximum value it can reach.  
+As cellular automata is the central idea behind the simulation. It is important to decide first on what the rules are. Just like in any physical system I wanted the rules to mirror the conservation of energy and another rule for movement of energy. Earlier versions of the simulation allowed for the cells to either be binary digits of 1 and 0 while later versions of the cells allowed for discrete values ranging from 0 to 8. The rules for version 1 and 2 are within this [link](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/rules.md) and this [link](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Rules.md). Basically the idea is the sum of all the numbers inside the grid cannot change over time and every non zero number can change one of its 8 neighbouring value by 1. For instance, in picture below,the cell labelled 6 can go to any one of its grey squares and but it cannot go to the 8 cell because its occupied and 8 is the maximum value it can reach.  
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/image.png)
 
@@ -63,7 +65,8 @@ Now that the rules of movement are done, we now get to the meaty part which is h
 $$\large S=k_{b}Ln(\Omega)$$ 
 
 Our job is to find a way to compute $\large \Omega$. Yes simple right? But now what?  
-For this problem I spent quite a long time thinking and trying to find information throughout the internet to find clues on how to compute $\large \Omega$ for this specific problem. Of course, I asked ChatGPT as well to give me suggestions but spoiler alert that conversation was fruitless as it gave me suggestions that just made everthing much harder. After some despairing, It was late at night when a caveman moment struck me. Remembering the excellent video that I watched ParthG made on [entropy](https://www.youtube.com/watch?v=mg0hueOyoAw&ab_channel=ParthG). I knew that the method requires me to do something related to counting the total number of integer combinations possible that adds up to a number. Hence I thought, rather than computing the entire grid which would be insane to do, what if I break the grid down into smaller byte sized chunks or 2x2 matrices as follows: 
+
+I spent quite a long time thinking and trying to find information throughout the internet to find clues on how to compute $\large \Omega$ for this specific problem. Of course, I asked ChatGPT as well to give me suggestions but spoiler alert, that conversation was fruitless as it gave me suggestions that just made everthing much harder. After some despairing, It was late at night when a caveman moment struck me. Remembering the excellent video that I watched ParthG made on [entropy](https://www.youtube.com/watch?v=mg0hueOyoAw&ab_channel=ParthG). I knew that the method requires me to do something related to counting the total number of integer combinations possible that adds up to a number. Hence I thought, rather than computing the entire grid which would be insane to do, what if I break the grid down into smaller byte sized chunks or 2x2 matrices as follows: 
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/matrix_splitting.png)
 
@@ -83,14 +86,14 @@ Now due to the basic counting principles in math. The total amount of configurat
 
 $$\large \Omega=\prod_{j=1}^{\frac{l^2}{4}} \omega_{j} $$ 
 
-For large grids, I might run into float32 errors in python as the numbers can get way to big. However, using the product rules in logartihms we can write the entropy equation as: 
+For large grids, I might run into int32 or even int64 errors in my computer as the numbers can get way to big. However, using the product rules in logartihms we can write the entropy equation as: 
 
 $$\large \dfrac{S}{k_{b}}=\sum_{j=1}^{\frac{l^2}{4}} ln(\omega_{j})$$
 
 ## Other dynamically changing parameter <a name="other"></a>
 Now at this point, I was quite happy with the fact that I've cracked the nut. However, I wanted to include 1 more idea within the simulation in whuch the user can dynamically change. It's here when I thought you could actually try to put conductivity as well. In the older version where the code is in [here](https://github.com/ShiroHusin/Entropy_Simulation/tree/main/Code). I had already implemented a parameter called $\large \alpha$ or move probability. This parameter controls the rate at which the code responsible for moving the numbers of the cells is executed. Now I figured that this has could be related to how "conductive" my grid is. At least my intuition told me so. Hence, I decided that I should have a function which maps conductivity to $\large \alpha$ wjere alpha can only range from 0 to 1. 
 
-At this stage, I could use a logistic function or $\large \tanh (x)$ but those 2 functions did not really provide me with the characteristics I would like. Namely, I wanted a function that grew quite fast from 0-100 and grows at an ever slower rate to 1 but to 1 it goes. This is where GeoGebra proved useful and I decided to use a custom sin(x) function after playing around with the graphs. So If I define:
+At this stage, I could use a logistic function or $\large \tanh (x)$ but those 2 functions did not really provide me with the characteristics I would like. Namely, I wanted a function that grew quite fast from 0-100 and grows at an ever slower rate to 1. This is where GeoGebra proved useful and I decided to use a custom sin(x) function after playing around with the graphs. So If I define:
 
 $$\large g(c)=\sin (\frac{1}{6000}c)^\frac{0.2}{0.1^c}$$
 
