@@ -163,8 +163,7 @@ class GUI():
         self.frame_scale.config(state="normal")
         self.Length_scale.config(state="normal")
         self.Conductivity_scale.config(state="normal")
-        self.Temp_scale.config(state="normal")
-        self.animation.on_terminate_clicked()
+        self.Temp_scale.config(state="normal")    
         ## Reset all the values
         self.length_val=100
         self.frame_val=200
@@ -172,6 +171,8 @@ class GUI():
         self.temp_val=1
         self.is_clicked = 0
         self.choice_val=""
+        ## So that the "Terminate" or reset button works properly
+        self.animation.on_terminate_clicked()
         raise Exception("Simulation Terminated")
 
     def save_button(self):
