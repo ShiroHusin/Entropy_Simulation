@@ -87,7 +87,7 @@ Now due to the basic counting principles in math. The total amount of configurat
 
 $$\large \Omega=\prod_{j=1}^{\frac{l^2}{4}} \omega_{j} $$ 
 
-For large grids, I might run into int32 or even int64 errors in my computer as the numbers can get way to big. However, using the product rules in logartihms we can write the entropy equation as: 
+For large grids, I might run into int32 or even int64 errors in my computer as the numbers can get way too big. However, using the product rules in logartihms we can write the entropy equation as: 
 
 $$\large \dfrac{S}{k_{b}}=\sum_{j=1}^{\frac{l^2}{4}} ln(\omega_{j})$$
 
