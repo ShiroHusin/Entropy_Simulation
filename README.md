@@ -71,7 +71,7 @@ I spent quite a long time thinking and trying to find information throughout the
 
 ![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/GiFs/matrix_splitting.png)
 
-For now, consider the fact that the middle matrix is the grid simulation itself and lets call each of the sub-matrices as $\large X_{j}$ and allow the grid to be square in shape and have its dimensions to be solely even integers.More formally let $\large l$ be the dimensions of the square grid and $\large l \in 2\mathbb{Z}$ From simple math, we can deduce that there should be $\large \frac{l^2}{4}$ different sub-matrices or $\large X_{j}$. Now, there are 4 cells within each element in $\large X_{j}$. Lets call this a, b, c, d. Noting that each cell can only be 0-8. This means that the energy level for each sub-matrix $X_{j}$ must range from 0-32. If we call this as $\large \Phi_{j}$, it means that: 
+For now, consider the fact that the middle matrix is the grid simulation itself and lets call each of the sub-matrices as $\large X_{j}$ and allow the grid to be square in shape and have its dimensions to be solely even integers. More formally let $\large l$ be the dimensions of the square grid and $\large l \in 2\mathbb{Z}$.   From simple math, we can deduce that there should be $\large \frac{l^2}{4}$ different sub-matrices or $\large X_{j}$. Now, there are 4 cells within each element in $\large X_{j}$. Lets call this a, b, c, d. Noting that each cell can only be 0-8. This means that the energy level for each sub-matrix $X_{j}$ must range from 0-32. If we call this as $\large \Phi_{j}$, it means that: 
 
 $$\large 0\leq \Phi_{j} \leq 32, \Phi_{j} \in \mathbb{Z} $$ 
 
@@ -92,7 +92,7 @@ For large grids, I might run into int32 or even int64 errors in my computer as t
 $$\large \dfrac{S}{k_{b}}=\sum_{j=1}^{\frac{l^2}{4}} ln(\omega_{j})$$
 
 ## Other dynamically changing parameter <a name="other"></a>
-Now at this point, I was quite happy with the fact that I've cracked the nut. However, I wanted to include 1 more idea within the simulation in whuch the user can dynamically change. It's here when I thought you could actually try to put conductivity as well. In the older version where the code is in [here](https://github.com/ShiroHusin/Entropy_Simulation/tree/main/Code). I had already implemented a parameter called $\large \alpha$ or move probability. This parameter controls the rate at which the code responsible for moving the numbers of the cells is executed. Now I figured that this has could be related to how "conductive" my grid is. At least my intuition told me so. Hence, I decided that I should have a function which maps conductivity to $\large \alpha$ wjere alpha can only range from 0 to 1. 
+Now at this point, I was quite happy with the fact that I've cracked the nut. However, I wanted to include 1 more idea within the simulation in whuch the user can dynamically change. It's here when I thought you could actually try to put conductivity as well. In the older version where the code is in [here](https://github.com/ShiroHusin/Entropy_Simulation/tree/main/Code). I had already implemented a parameter called $\large \alpha$ or move probability. This parameter controls the rate at which the code responsible for moving the numbers of the cells is executed. Now I figured that this has could be related to how "conductive" my grid is. At least my intuition told me so. Hence, I decided that I should have a function which maps conductivity to $\large \alpha$ where alpha can only range from 0 to 1. 
 
 At this stage, I could use a logistic function or $\large \tanh (x)$ but those 2 functions did not really provide me with the characteristics I would like. Namely, I wanted a function that grew quite fast from 0-100 and grows at an ever slower rate to 1. This is where GeoGebra proved useful and I decided to use a custom sin(x) function after playing around with the graphs. So If I define:
 
@@ -137,3 +137,5 @@ Simulation 1 |  Simulation 2
 For additional information, please see the documents that I have written in [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Thoughts.pdf) for version 1 and [here](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Entropy_Computation.pdf) on the method in which I calculated entropy. 
 
 For version 2, please see this [document](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.pdf) for additional information.
+
+The source code for version 2 and version 1 is named [Engine.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/Engine.py) and [Automata.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Automata.py) respectively. 
