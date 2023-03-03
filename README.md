@@ -91,6 +91,12 @@ For large grids, I might run into int32 or even int64 errors in my computer as t
 
 $$\large \dfrac{S}{k_{b}}=\sum_{j=1}^{\frac{l^2}{4}} ln(\omega_{j})$$
 
+Disclaimer: In counting the total number of micro-states, I've made 2 implicit assumptions. These are: 
+- Each cell is distinguishable 
+- The counting method ignores the Pauli-Exclusion principle
+
+For the sake of this simulation, I've decided to ignore these 2 facts as it adds some uncessary complexity to it. 
+
 ## Other dynamically changing parameter <a name="other"></a>
 Now at this point, I was quite happy with the fact that I've cracked the nut. However, I wanted to include 1 more idea within the simulation in whuch the user can dynamically change. It's here when I thought you could actually try to put conductivity as well. In the older version where the code is in [here](https://github.com/ShiroHusin/Entropy_Simulation/tree/main/Code). I had already implemented a parameter called $\large \alpha$ or move probability. This parameter controls the rate at which the code responsible for moving the numbers of the cells is executed. Now I figured that this has could be related to how "conductive" my grid is. At least my intuition told me so. Hence, I decided that I should have a function which maps conductivity to $\large \alpha$ where alpha can only range from 0 to 1. 
 
