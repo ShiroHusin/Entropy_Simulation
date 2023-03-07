@@ -1,7 +1,7 @@
 In version 2 the rules of the problem are: 
 1. A cell within the 2D grid can take any integer values ranging from 0 to 8.
 
-2. The number of 1s within the grid cannot change. This is an analogue of the 1st law of thermodynamics. 
+2. The summation of numbers within the grid cannot change. This is an analogue of the 1st law of thermodynamics. 
 
 3. An occupied cell (1-8) transfer its energy to an any cell that is not an 8 within 1 square distance away. 
    - This means that cells containing energy surrounded cells that are not 8s has 8 possible outcomes or 8 ways it can transfer its energy. It can go up, down, left, right or any of the 4 diagonals.
