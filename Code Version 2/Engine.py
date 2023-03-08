@@ -404,7 +404,7 @@ class AutomataSimulation:
         if self.is_running == True:
             self.rate = 50
         elif self.is_running==False:
-            self.rate = 10000000
+            self.rate = 50
         self.n = length
         self.grid = grid
         self.conductivity = conductivity
@@ -466,13 +466,13 @@ class AutomataSimulation:
 
     def update_temperature(self, value):
         self.temperature = float(value)
-        self.ax.set_title("T: {:.0f} Kelvin".format(self.temperature), loc="left")
+        self.ax.set_title("T: {:.0f} ".format(self.temperature), loc="left")
 
     def update(self, frame):
         alpha = move_prob().heat_transfer_prob(self.conductivity)
         grid = apply_rules_2d(self.grid, alpha, self.temperature)
         self.im.set_data(grid[1:-1, 1:-1])
-        self.ax.set_title("T: {:.1f} Kelvin".format(self.temperature), loc="left")
+        self.ax.set_title("T: {:.1f}".format(self.temperature), loc="left")
         self.ax.set_title("Move probability: {:.2f} ".format(alpha), loc="right")
         entropy = calculate_entropy(grid, self.microstates_dict)
         self.entropy.append(entropy)
