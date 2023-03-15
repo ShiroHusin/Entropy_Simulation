@@ -1,0 +1,34 @@
+\chapter{Introduction}
+Cellular Automata (CA) is a fascinating topic within the field of computer science. Its principles have been used to model complex phenomena in the area of computational biology, physics, and mathematics. \par
+
+\vspace{0.3cm}
+\noindent 
+Last month, I was exploring the applications of cellular automata, in particular, the "game of life" which was created by John Horton Conway in the 1970s. While I was reading the Wikipedia page I connected 2 dots. I realized that you could use the principles of cellular automata to demonstrate the 2nd law of thermodynamics and why it will always tend to increase in isolated systems. \par
+
+\vspace{0.3cm}
+\noindent
+In the previous \href{https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Thoughts.pdf}{document}, I have discussed the basic idea behind the implementation and the rules. In this document, I would like to revisit the rules and fine-tune them to relax certain assumptions of the simulation in version 1. \par
+
+\vspace{0.3cm}
+\noindent
+To recap, the simulation in version 1 contains 3 rules and 1 feature. These are: 
+\begin{itemize}
+    \item A cell can only be a one or zero. 
+    \item A one cell can transfer its "energy" towards a 0 cell that is surrounding it or its Moore's neighborhood. 
+    \item The number of one cells within the simulation cannot change. 
+    \item[--] Feature: There is a parameter called alpha or "move probability" which determines the likelihood that the code responsible for movement will execute for each 1s.
+\end{itemize}
+
+These 3 rules and features are enforced to a large square matrix that can be easily initialized using the NumPy library in Python. Lastly, version 1 employs a very crude method to compute the entropy of the entire system. The strategy used to calculate it involves flattening the entire NumPy grid into a 1-dimensional array of 1s and 0s. Next, the flattened array is divided into chunks of 2. Afterward, a bitwise XOR operation is performed on each of the chunks moving 1 square at a time. Finally, the truth values are all summed up and plotted in a graph of entropy versus iterations. This process produces 1 data point and is performed every time for a single iteration of the grid. \par
+
+\vspace{0.3cm}
+\noindent
+The main idea behind this method is that if the grid is more entropic. there should be more occurrences of alternating 1s and 0s rather than repeating 1s or repeating 0s. This means sequences such as $(0,1)$ or $(1,0)$ should be more likely if the grid is more entropic compared to sequences such as $(0,0)$ or $(1,1)$. This is where the use of bitwise XOR shines through as alternating 1s and 0s return a value of 1 while the others yield a 0. While flawed, the assumption works if the number of occupied cells (which cannot change) is a small percentage of the total number of cells of the entire grid. \par
+
+\vspace{0.3cm}
+\noindent
+As a result, chosen strategy to compute the entropy (H) yields values that can be bounded in the following inequality:
+
+$$0 \leq H \leq 2E$$
+
+Where E is the total energy of the grid or is the number of one cells within the grid. The upper bound is 2E as the bitwise XOR function can double count the number of alternating 1s and 0s as it moves one square at a time. \par 

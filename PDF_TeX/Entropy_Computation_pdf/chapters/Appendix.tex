@@ -1,0 +1,57 @@
+\appendix
+\chapter{Data Cleaning}
+\section{Figure 2.1}
+\large \textbf{Figure 2.1  requires the following code:}
+
+\vspace{0.5cm}
+\begin{python} 
+import pandas as pd
+import numpy as np
+## Data_Cleaning
+## To answer the 1st part of the question
+alcohol=pd.read_csv(r'C:\Users\Bowen\PycharmProjects\Raw Data\Alcohol\data.csv')
+columns=list[alcohol.columns]
+columns_I_Care=["pop2023","country","region","subregion","male","female","both","year"]
+df=alcohol[columns_I_Care]
+A=df.groupby(["region"]).agg({"male":"mean","female":"mean","both":"mean"}).reset_index()
+columns_I_Care_care=["country","both","male","female"]
+DF=df[columns_I_Care_care]
+
+"The rest of the data visualisation is done by Tableau"
+\end{python} 
+
+\pagebreak
+\section{Figure 2.2}
+\large \textbf{Figure 2.2  requires the following code:}
+\begin{python}
+    
+## To answer the 2nd half of the question
+GDP=pd.read_csv(r'C:\Users\Bowen\PycharmProjects\Raw Data\GDP per Capita\GDP_per_Capita.csv')
+GDP_I_Care=GDP[["Country Name","2021"]] ## Select only these columns
+GDP_df=GDP_I_Care.rename(columns={"2021":"GDP per capita"})
+
+## Lets try using the previous information of previous alcohol dataframe so that I can classify based on region.
+European_list=df[df["region"]=="Europe"]["country"].unique()
+African_list=df[df["region"] == "Africa"]["country"].unique()
+Asian_list=df[df["region"] == "Asia"]["country"].unique()
+North_American_list=df[df["region"] == "North America"]["country"].unique()
+South_American_list=df[df["region"] == "South America"]["country"].unique()
+Oceania_list=df[df["region"] == "Oceania"]["country"].unique()
+
+Regions_list=["Europe","Africa","Asia","North America","South America","Oceania"]
+conditions=[
+    (GDP_df["Country Name"].isin(European_list)),
+    (GDP_df["Country Name"].isin(African_list)),
+    (GDP_df["Country Name"].isin(Asian_list)),
+    (GDP_df["Country Name"].isin(North_American_list)),
+    (GDP_df["Country Name"].isin(South_American_list)),
+    (GDP_df["Country Name"].isin(Oceania_list))
+]
+GDP_df["Region"]=np.select(conditions,Regions_list)
+## Hand modified CSV file as computer cannot recognise some countries
+GDP_DF=pd.read_csv("check.csv")
+GDP_DF=GDP_DF[GDP_DF["Region"].isin(df["region"])]
+GDP_table=GDP_DF.groupby("Region").agg({"GDP per capita":"mean"}).reset_index()
+
+"The rest of the data visualisation is done by Tableau"
+\end{python}

@@ -1,0 +1,236 @@
+\chapter{Introduction}
+\section{What is cellular automata (CA)}
+In short, CA is a subset of computer science that studies discrete systems. These systems are mathematical idealizations of actual physical systems that aid physicists, biologists, and mathematicians in understanding real-life phenomena.   \par
+
+\vspace{0.3cm}
+The playing field of cellular automata is typically an infinite 2-dimensional vector space that has a discrete value in each site or cell \cite{Wolfram:1983}. This means that the numbers within each cell should be integers or natural numbers. This system evolves according to a set of rules which are applied simultaneously throughout the grid. In terms of functions, the process flow of cellular automata is shown in Figure \ref{fig:my_label}. \par
+
+\vspace{0.0cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm,height=5cm]{images/CA.png}
+    \caption{Process flow of Cellular Automata}
+    \label{fig:my_label}
+\end{figure}
+ The CA evolves in discrete integer time steps where the output grid depends on the state of the input grid. The input grid is then replaced with the output of the previous time step and the image box is there to visualize how the system evolves over time. The above loop can run forever or it can halt when the number of desired iterations is reached. \par
+
+\vspace{0,3cm}
+The modeling of cellular automata has been used extensively within the field of computational biology. For instance, naturally occurring CA's can be found within seashells \cite{S.Coombes:2009} in accordance to rule 30 from Stephen Wolfram's work in 1983 \cite{Wolfram:1983}. \par
+
+\vspace{0.3cm}
+Cellular automata was formally introduced in the 1940s by Polish Physicist Stanisław Ulam and mathematician John Von Neumann. However, the big hit piece that put cellular automata within the public sphere was John Conway's work in 1970 known as \textbf{The game of life} \cite{M.Gardner:1970}.
+
+\pagebreak
+Going back to Figure \ref{fig:my_label}, constructing F(x) requires us to lay the foundations of the rules. In Conway's game of life, the rules are: 
+\begin{itemize}
+    \item A cell can only be alive or dead.
+    \item Any live cell with fewer than two live neighbors dies, as if by under-population.
+    \item Any live cell with two or three live neighbors lives on to the next generation.
+    \item Any live cell with more than three live neighbors dies, as if by overpopulation.
+    \item Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+\end{itemize}
+
+To get a better representation in coding terms, imagine the following array where the cell at i,j position is shaded (1) and the rest of cells 1 square surrounding it is white (0): 
+\begin{figure}[H]
+     \centering
+     \begin{subfigure}[h]{0.3\textwidth}
+         \centering
+         \includegraphics[width=5cm,height=5cm]{images/array_index.png}
+         \caption{Initial grid}
+         \label{fig:input}
+     \end{subfigure}
+      \hspace{0.7cm}
+      $\longrightarrow$
+     \begin{subfigure}[h]{0.3\textwidth}
+         \centering
+         \includegraphics[width=5cm,height=5cm]{images/grid_output.png}
+         \caption{Output grid}
+         \label{fig:output}
+     \end{subfigure}
+        \caption{Initial and final grid state}
+        \label{fig:output_machine}
+\end{figure}
+Figure \ref{fig:output_machine} displays the consequence of applying the rules toward the initial grid. The example above is a simple case, however, things can get far more complex. By following the same rules under the right initial grid configuration, one can actually make a "Gosper gun". The associated gif is available in \href{https://commons.wikimedia.org/wiki/File:Gospers_glider_gun.gif}{Wikipedia}. There are many more fascinating patterns that emerge within the game of life. Some of these patterns form a stable structure with a certain periodicity while others form chaotic structures where there is no way of predicting the final outcome. Lastly, an important property of Conway's game of life is that it is Turing complete. This means that it can perform any sort of computation and it would indeed be possible to make the game of life within the game of life within the game of life! 
+\pagebreak
+
+\section{An introduction to Entropy}
+Before I introduce my simulation, a definition of entropy needs to be established. The normal zeitgeist definition of entropy is that it is a measure of disorder within a system. This is partially true. However, I think this definition is coming from statistical mechanics. \par
+
+\vspace{0,3cm}
+Another way to think about entropy is that it measures the amount of "useless" energy within a system. If the system is of higher entropy, there is not much you can do to extract energy from it. If the system is of a lower entropy state, then there is a lot one can do to extract energy from it. Consider the following 2 examples:  
+\begin{itemize}
+    \item Building a hydroelectric dam on 2 reservoirs of water of a different height versus water at even footing. 
+    \item Using fuel to drive pistons within an engine that drives movement.
+\end{itemize}
+In both examples, there is a lot more that one can do in the initial state (2 reservoirs of unequal height or fuel) rather than the final state (water of even footing or CO2 gases).
+
+\subsection{Statistical mechanics definition of entropy}
+To understand the statistical mechanics' definition, I would need to introduce the notion of a \textbf{macro-state} and \textbf{micro-state }.To get an intuitive feeling of what a micro-state is consider the following sequence of randomly generated 8 bits of information: 
+$$S_{1}=[0,1,0,1,1,1,0,1]$$
+$$S_{2}=[1,0,0,1,0,1,1,1]$$
+$$S_{3}=[1,1,1,0,0,1,0,0]$$
+There are exactly $2^{8}$ or 256 possible sequences of 1s and 0s, each of them unique. Each of these unique configurations of $S_{k}$ where $k \in (1,256)$ is a micro-state. For example, $S_{1}$ is a micro-state so is $S_{2}$ and so is $S_{3}$, and all the way to $S_{256}$ are all possible configurations or micro-states. \par
+
+\vspace{0.3cm}
+To understand what is meant by a macro-state, consider the following parameter $a$ that counts the total number of 1s within this 8-bit sequence. There is only 1 possible sequence that yields $[0,0,0,0,0,0,0,0]$ \emph{no ones} or $[1,1,1,1,1,1,1,1]$ \emph{all ones}. On the other hand, there are 8 unique combinations for the sequence of $a=1$, $[1,0,0,0,0,0,0,0]$  where each of the 1 is in different positions. Likewise, there are 28 possible unique combinations for $a=2$ one of them being $[1,0,0,1,0,0,0,0]$ where the two 1s are placed at different positions. \par
+
+\vspace{0,3cm}
+We can compile the results for all possibilities of $a$ and tally up the total number of sequences associated with $a$ in the following table:
+\begin{center}
+\begin{tabular}{ |p{3cm}||p{3cm}||p{3cm}|  }
+ \hline
+Number of 1s ($a$)& No of sequences & Probability\\
+ \hline
+ 0   & 1 &0.0039\\
+ 1&   8 &0.031\\
+ 2&28& 0.11 \\
+ 3&56 & 0.22\\
+ 4&70 &0.27\\
+ 5&56 & 0.22\\
+ 6&28 & 0.11\\
+ 7&8 & 0.031\\
+ 8&1 & 0.0039\\
+ \hline
+\end{tabular}
+\end{center} 
+Adding each of the elements within the number of sequences adds up to 256 and the associated probabilities to 1. \par
+
+\vspace{0,3cm}
+Going back to what is meant by a macro-state, the macro-state in this context is the measure of the Number of 1s. So for the macro-state of having four 1s $a=4$, there are 70 possible micro-states or combinations where there are four 1s in the randomly generated sequence $S_{k}$. Likewise, there are 56 possible micro-states associated with the macro-state of having three 1s or five 1s. \par
+
+\vspace{0,3cm}
+Now that notions of macro-state and micro-state are defined. I can finally put \textbf{entropy} into the mix $: )$ So what is this entropy? Entropy is simply a direct measurement of the number of micro-states a system is associated with its macro-state. In statistical mechanics, Ludwig Boltzmann defined entropy as: 
+\begin{equation*}
+    S=k_bln(\omega)
+\end{equation*}
+Where entropy is $S$ and the number of micro-states corresponding to its macro-state is $\omega$. For my example, I will omit the Boltzmann constant $k_{b}$ and modify the equation as: 
+\begin{equation*}
+    S_{a}=log_{10}(\omega_{a})
+\end{equation*}
+In this equation, the entropy associated with the macro-state $a$ is given by $S_{a}$. Applying this equation to the above table yields: 
+\begin{center}
+\begin{tabular}{ |p{3cm}||p{3cm}||p{3cm}|  }
+ \hline
+Macro-state ($a$)& Micro-states & Entropy $S_{a}$\\
+ \hline
+ 0   & 1 &0\\
+ 1&   8 &0.903\\
+ 2&28& 1.447 \\
+ 3&56 & 1.748\\
+ 4&70 &1.845\\
+ 5&56 & 1.748\\
+ 6&28 & 1.447\\
+ 7&8 & 0.903\\
+ 8&1 & 0\\
+ \hline
+\end{tabular}
+\end{center} 
+As seen from the table, the entropy for 3,4, and 5 is a lot larger than the entropy values of 1 or 7. By this section, the definition of entropy is complete. However, there is another piece of the puzzle that needs to be addressed. 
+\pagebreak
+
+\subsection{The first law of thermodynamics}
+The picture of entropy isn't quite complete without 1st law of thermodynamics. The first law formally states: 
+\begin{equation}
+    \Delta U= Q \pm W
+    \label{Eq:1}
+\end{equation}
+In plain English, this states that the change in the internal energy of a system is equal to the energy supplied to the system, (denoted by $Q$) added by the thermodynamic work to the system, (denoted as $W$). The $ \pm $ sign is there depending on 2 situations. If thermodynamic work is added to the system, it's a +, if work is extracted from the system it's a - sign. \par
+
+\vspace{0,3cm}
+The above situation describes any \textbf{closed system} in which energy can flow but matter cannot. Examples of closed systems include: 
+\begin{itemize}
+    \item Gas within a fully enclosed box where no gas can enter but can still get heated.
+    \item The room of a teenage emo where the parents can't come in after a temper tantrum but can still call his/her phone lying within their room.
+    \item The particle accelerator at \href{https://www.home.cern/}{CERN} where no gas or matter can come in to disrupt the experiment of mad geniuses but the pipe housing the proton collision can still dissipate heat and get colder. 
+\end{itemize}
+There is also the idea of an \textbf{isolated system}. In this case, neither matter nor energy can flow into the system. Examples of isolated systems include: 
+\begin{itemize}
+    \item Gas within a perfectly enclosed and insulated box where no gas can enter and no energy can flow in or out. 
+    \item The Universe
+\end{itemize}
+For an isolated system Equation \ref{Eq:1} reduces to: 
+\begin{equation}
+    \Delta U=0 
+    \label{Eq:2}
+\end{equation}
+ This means that for an isolated system, energy cannot be created or destroyed which is essentially the first law of thermodynamics. 
+\subsection{Putting the puzzle pieces together}
+To understand the interplay between the 1st law of thermodynamics with entropy. Consider the following game: \par
+
+\vspace{0,3cm}
+Imagine that there are 2 systems within an isolated system. Each system is denoted as: 
+$$S_{1}=[1,0,0,1,0,1,0,0.....]$$
+$$S_{2}=[0,1,0,0,1,1,0,0.....]$$
+\pagebreak
+Where both systems are:
+\begin{itemize}
+    \item Each of set length $l$ containing $l$ elements and the length of both is $l+l=L$
+    \item Each element is discrete and only takes binary values.
+    \item The number of 1s between these 2 systems is constant $E$. 
+    \begin{description}
+     \item[Means: ] The number of 1s between $S_{1}$ and $S_{2}$ must be equal and constant
+     \item[Mathematically:] $n_{1}+n_{2}=E$, where $n_{1},n_{2} \in \mathbb{N}$ 
+     \item[For the math nazis:] For simplicity sake, consider 0 $\in \mathbb{N}$
+     \end{description}
+\end{itemize}
+To initialize the game, let $E \leq l$ where $l \in \mathbb{N}$ and $ E \in \mathbb{N} $. \par
+
+\vspace{0,3cm}
+If I choose the $l=12$ and $E=12$. There are 13 possible pairs of $n_{1}+n_{2}$ such that $n_{1}+n_{2}=12$. Some of these pairs of $n_{1}+n_{2}$ are:
+\begin{itemize}
+    \item 0+12, $n_{1}=0$, $n_{2}=12$
+    \item 7+5, $n_{1}=7$, $n_{2}=5$
+    \item 8+4, $n_{1}=8$, $n_{2}=4$
+    \item 3+9, $n_{1}=3$, $n_{2}=9$
+\end{itemize}
+The total number of permutations or micro-states that this game can take is $2^{2l}$ or $2^{24}$ in the case above. However, the total number of combinations the game can take for a set amount of E is: 
+\begin{equation}
+    \Mycomb{E} = \frac{(L)!}{E!(L-E)!}\quad
+    \label{Eq:Combination}
+\end{equation}
+Likewise, each of the 13 pairs of $n_{1}+n_{2}$ has an associated number of configurations that satisfy the pair. In this case, the number of configurations must add up to $\frac{(24)!}{12!(24-12)!}=2704156$. 
+We can tabulate all possible sequences corresponding to the possible pairs of $n_{1}$ and $n_{2}$ as follows: 
+\begin{center}
+\begin{tabular}{ |p{2cm}|p{2cm}|p{3cm}|p{2.4cm}|p{2cm}|  }
+ \hline
+$n_{1}$& $n_{2}$ & Micro-states & Probability & Entropy\\
+ \hline
+ 0   & 12 &1&0.00&0\\
+ 1&   11 &144&0.00&2.16\\
+ 2&10& 4356& 0.00&3.64\\
+ 3&9 & 48400&0.02&4.68\\
+ 4&8 &245025&0.09&5.39\\
+ 5&7 & 627264&0.23&5.8\\
+ 6&6 & 853776&0.32&5.93\\
+ 7&5 & 627264&0.23&5.8\\
+ 8&4 & 245025&0.09&5.39\\
+ 9&3 & 48400&0.02&4.68\\
+ 10&2 & 4356&0.00&3.64\\
+ 11&1 & 144&0.00&2.16\\
+ 12&0 & 1&0.00&0\\
+ \hline
+\end{tabular}
+\end{center} 
+Now consider $S_{1}$ and $S_{2}$ to be closed systems where each sequence can transfer a 1 to each other in any way such that $n_{1}+n_{2}=E=12$ is conserved.\par
+\pagebreak
+
+\vspace{0,3cm}
+If I start with 2 sequences such that $n_{1}=10$ and $n_{2}=2$. What is the probability that $n_{1}$ increases spontaneously? It turns out that this number is astronomically low as $\frac{145}{2704156}$. \par
+
+\vspace{0,3cm}
+So if you imagine the sequence $S_{1}$ being a hot object with $\frac{10}{12}$ elements being heated and sequence $S_{2}$ being a cold object with $\frac{2}{12}$ elements being heated. The chances that $S_{1}$ gets hotter is $\frac{145}{2704156}$. Basically, it almost never happens spontaneously. \par
+
+\vspace{0.3cm}
+The chances that a hot object gets hotter and a cold object gets colder becomes even more unlikely when the length of the sequences $l$ and energy units $E$ are scaled up. Now consider $l=100$ and $E=100$. If I start with $S_{1}$ having an $n_{1}=30$ and $S_{2}$ having a $n_{2}=70$, the chances that $S_{1}$ gets colder spontaneously is $ 0.00000001155163215 $. Now that is only for 100 particles in real life a typical object like a mug of 300 ml of water contains 16.7 moles of water. If you'd imagine 2 different cups and each particle of water having the same property of being heated or not heated. The chances that the hotter cup gets hotter is in the order of magnitude of $ 10^{-100}$. It's probably much smaller than that! \par
+
+\vspace{0,3cm}
+Real-life phenomena constantly alternate between each micro-state at random with each of them being of equal probability. In my example of \ref{Eq:Combination}, there are 2704156 possible micro-states that satisfy $n_{1}+n_{2}=12$. Each of the micro-states is equally likely with one another. If we started with $S_{1}$ having six 1s and $S_{2}$ having six 1s. The chance s are that we are going to see a huge drop in entropy from 5.93 to anything equal or lower than 3.64 is $\frac{9002}{2704156}$. Which is a very small number. Scaling this up to real-life scenarios would just mean that a noticeable drop in entropy due to spontaneous arrangement is neigh impossible. \par
+
+\vspace{0.3cm}
+This brings us to another fact: \textbf{Entropy can decrease but it will always \emph{tend} to increase}. This is the 2nd law of thermodynamics.\par
+
+\vspace{0,3cm}
+Concerning, orderliness and disorderliness. I would like to rephrase the question as energy being concentrated versus energy being spread out. In \ref{Eq:Combination}, a configuration of orderly structures are pairs of $(12,0),(0,12),(1,11),(11,1),(10,2),(2,10)$. As seen from the table, there are many more configurations where the energy units are more evenly distributed between the 2 sequences $S_{1}$ and $S_{2}$, the associated micro-states that are available for all other pairs is 2695154 which means that if I were to look at the game at random. There is a $99.7\%$ chance that the energy between the 2 sequences is more spread out. \par
+
+\vspace{0.3cm}
+Additionally, if I started with 1 sequence having 10 energy units $n_{1}=10$ and the other with 2 energy units $n_{1}=2$, it is almost a guarantee that it will no longer be in the same configuration pair of $(10,2)$ after some time and will most likely be in $n_{1},n_{2}$ pairs of $(4,8),(6,6), (5,7), (7,5)$. There is an associated increase of entropy accompanying this phenomenon but there is absolutely zero force driving the direction toward randomness. It is simply because being random and disorderly is more likely than it is to be orderly. 
