@@ -1,0 +1,86 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage[a4paper, width=150mm, top=25mm, bottom=25mm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{comment}
+\usepackage{pythonhighlight}
+\usepackage[numbers]{natbib}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+\usepackage{mathtools}
+
+\newcommand\Myperm[2][^n]{\prescript{#1\mkern-2.5mu}{}P_{#2}}
+\newcommand\Mycomb[2][^L]{\prescript{#1\mkern-0.5mu}{}C_{#2}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\titleformat{\chapter}[hang] 
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter:}{1em}{}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\thesection}
+\fancyhead[R]{\textbf{Entropy using cellular automata}}
+\fancyfoot{}
+\fancyfoot[L]{\thepage}
+\fancyfoot[R]{Bowen Shiro Husin}
+\setlength\parindent{0pt}
+
+\begin{document}
+\input{titlepage.tex}
+
+\chapter*{Acknowledgements}
+This project is intended to keep my brain busy while I am unemployed. Likewise, it's meant to be a coding challenge that I've come up with. This document is meant to declare the mathematics and my line of thinking in designing the rules and entropy computation. Should you read this part, feel free to use the code and tinker with it. If you are a physics teacher, feel free to use it to teach your students about the fascinating concept of entropy.   \par
+
+\vspace{0.3cm}
+To view how my code is implemented check my GitHub \href{https://github.com/ShiroHusin/Entropy_Simulation}{repository}.
+
+
+\chapter*{Abstract}
+Entropy is a fascinating concept with far-reaching consequences for our daily lives. In this document, a cellular-automata-inspired approach is proposed. Namely, a 2-dimensional array consisting of 1s and 0s is constructed for visualizing  entropy increase over time. \par
+
+\vspace{0.3cm}
+\noindent
+To declare the initial function for running the simulation. 3 Laws were proposed alongside an additional feature called $\alpha$ which is responsible for controlling the probability of movement. To calculate the entropy, Shannon's entropy alongside simplified techniques from mathematical papers was adopted for the specific problem.  \par
+
+\vspace{0.3cm}
+\noindent
+Results from the simulation show that the underlying structure of the 2-dimensional array will become more uniformly distributed. The Move probability declared as $\alpha$ is shown to have a tremendous effect on the final results. The proxy measurement of entropy shows a large increase within the first hundred iterations followed by a decrease in its gradient. Slight variations of the proxy entropy measurement are also visible due to random walks that each of the 1s can take according to the 3 rules.     \par
+
+
+
+\tableofcontents
+
+\pagebreak
+
+\include{chapters/Chapter1.tex}
+
+\pagebreak
+\include{chapters/Chapter2.tex}
+
+\pagebreak
+\include{chapters/Chapter3.tex}
+
+\pagebreak
+\include{chapters/Conclusion.tex}
+
+\pagebreak
+\bibliographystyle{IEEEtran} 
+\bibliography{Reference}
+
+
+\end{document}
