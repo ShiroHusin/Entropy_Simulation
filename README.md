@@ -145,3 +145,7 @@ For additional information, please see the documents that I have written in [her
 For version 2, please see this [document](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.pdf) for additional information.
 
 The source code for version 2 and version 1 is named [Engine.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code%20Version%202/Engine.py) and [Automata.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Automata.py) respectively. 
+
+### Upgrades incoming for Version 3 
+- Uses [Manim](https://github.com/ManimCommunity/manim)
+- Uses images as starting grids
