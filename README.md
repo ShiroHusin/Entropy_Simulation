@@ -4,6 +4,12 @@
 - Uses images as starting grids
 - Currently on version 2
 
+Manim visualisation|
+:-------------------------:
+![](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Manimations/Compressed_Entropy.mp4)  | 
+
+
+
 # Table of contents
 1. [Introduction](#introduction)
 2. [Deciding the rules](#rules)
