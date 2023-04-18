@@ -6,17 +6,18 @@
 
 https://user-images.githubusercontent.com/122879756/232184406-4249c91a-0053-4005-9a03-944d7b5fdc7a.mp4
 
-## For entertainment purposes, consider the following rap poem. 
+## For entertainment purposes, here is a rap poem I made
 
+```py
 """
-- To understand, we'll need to discern
--With microstates, our foundation's firm
--lets us consider a game of coins 
--by employing a tree with its lines conjoined 
--List the paths as shown below 
--By highlighting the routes, we'd like to know 
--Microstates, these routes are 
--Revealing the premises that was barred 
+To understand, we'll need to discern
+With microstates, our foundation's firm
+lets us consider a game of coins 
+by employing a tree with its lines conjoined 
+List the paths as shown below 
+By highlighting the routes, we'd like to know 
+Microstates, these routes are 
+Revealing the premises that was barred 
 
 But the sea is vast that there is more to know 
 The macrostate that I've yet to show 
@@ -43,5 +44,6 @@ yet its a fate that awaits us many
 For eternity the law will reign 
 As in existence itself it is deeply ingrained.
 """
+```
 
 ### More Manim Animations (Manimations) to come : ) 
