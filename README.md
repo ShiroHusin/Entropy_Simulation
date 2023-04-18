@@ -9,7 +9,7 @@ https://user-images.githubusercontent.com/122879756/232184406-4249c91a-0053-4005
 ## For entertainment purposes, consider the following rap poem. 
 
 """
--To understand, we'll need to discern
+- To understand, we'll need to discern
 -With microstates, our foundation's firm
 -lets us consider a game of coins 
 -by employing a tree with its lines conjoined 
