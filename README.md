@@ -46,4 +46,15 @@ As in existence itself it is deeply ingrained.
 """
 ```
 
-### More Manim Animations (Manimations) to come : ) 
+### Cookbook Recipe 
+
+1. Download an Image you like in Google Images and save it.
+
+2. An image is a 2 dimensional grid stacked 3 times, take one of these stacks. 
+
+3. To reduce computational demand, alter the range from 0-255 to 0-N where $0 \leq N \leq 32$.
+
+4. Apply a Cellular automata rule iteratively for K epochs. 
+   - Indentify all the non zero cells and randomize their locations
+   - For each non zero cell, if a uniform distribution $U \sim \text{Uniform}(0,1)$  is less than move probability $\alpha$ then 
+     - 
