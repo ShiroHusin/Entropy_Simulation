@@ -52,7 +52,7 @@ As in existence itself it is deeply ingrained.
 
 2. An image is a 2 dimensional grid stacked 3 times, take one of these stacks. 
 
-3. To reduce computational demand, alter the range from 0-255 to 0-N where $0 \leq N \leq 32$.
+3. To reduce computational demand, alter the range from 0-255 to 0-N where $0 \leq N \leq 32$ and the dimensions to a reasonable amount maybe 500x900 max. 
 
 4. Apply a Cellular automata rule iteratively for K epochs. 
    - Indentify all the non zero cells and randomize their locations
