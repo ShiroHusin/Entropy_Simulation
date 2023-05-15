@@ -61,7 +61,7 @@ As in existence itself it is deeply ingrained.
    - Compute the transition probabilities according to boltzmann factors and partision functions 
    - Move a quanta of energy from the cell in question to a cell that was chosen 
    - Repeat the steps above for all the non zero cells 
-   - Update the entire grid confugration for 1 iteration. 
+   - Update the entire grid configuration for 1 iteration. 
    
 5.  To compute entropy, apply a convolution like technique that checks the state of a small section of the grid via a 2x2 kernel. 
     - The energy of the 2x2 kernel can range from 0 to $4(a+b+c+d) = \phi$ where $a,b,c,d$ is each entry of the 2x2 matrix. 
