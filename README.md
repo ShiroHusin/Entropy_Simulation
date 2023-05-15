@@ -66,7 +66,7 @@ As in existence itself it is deeply ingrained.
 5.  To compute entropy, apply a convolution like technique that checks the state of a small section of the grid via a 2x2 kernel. 
     - The energy of the 2x2 kernel can range from 0 to $4N$
     - For each of these integer energy levels, find the number of integer combinations possible from the 4 entries of the 2x2 matrix
-    - In other words find integers $a, b, c, d$ such that $ a + b + c + d = \phi $. Use recursion and store this in a dictionary. 
+    - In other words find integers $a, b, c, d$ such that $a + b + c + d = \phi$. Use recursion and store this in a dictionary. 
     - For each iteration $n$ use a strides function that checks the grid configuration's energy so that entropy is not double counted. 
     - Once all the energy states is identified, match it to the dictionary through its keys. 
     - Take the log of each of the mappings and sum it up, this is entropy for 1 datapoint 
