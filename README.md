@@ -56,7 +56,7 @@ As in existence itself it is deeply ingrained.
 
 4. Apply a Cellular automata rule iteratively for K epochs. 
    - Indentify all the non zero cells and randomize their locations
-   - For each non zero cell, if a uniform distribution $U \sim (0,1)$  is less than move probability $\alpha$ do something else skip that cell
+   - For each non zero cell, if a uniform distribution $U \sim (0,1)$  is less than move probability $\alpha$ do something, else skip that cell
    - Now check the moore neighborhood of each non zero cell 
    - Compute the transition probabilities according to boltzmann factors and partision functions 
    - Move a quanta of energy from the cell in question to a cell that was chosen 
@@ -64,7 +64,7 @@ As in existence itself it is deeply ingrained.
    - Update the entire grid configuration for 1 iteration. 
    
 5.  To compute entropy, apply a convolution like technique that checks the state of a small section of the grid via a 2x2 kernel. 
-    - The energy of the 2x2 kernel can range from 0 to $4(a+b+c+d) = \phi$ where $a,b,c,d$ is each entry of the 2x2 matrix. 
+    - The energy of the 2x2 kernel can range from 0 to $a+b+c+d = \phi$ where $a,b,c,d$ is each entry of the 2x2 matrix. 
     - For each of these integer energy levels, find the number of integer combinations possible from the 4 entries of the 2x2 matrix
     - In other words find integers $a, b, c, d$ such that $a + b + c + d = \phi$. Use recursion and store this in a dictionary. 
     - For each epoch $K$, use a strides function that checks the grid configuration's energy so that entropy is not double counted. 
