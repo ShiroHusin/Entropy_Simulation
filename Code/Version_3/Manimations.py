@@ -7,15 +7,44 @@ from scipy.special import comb
 from scipy import signal
 import random
 
-Grid_data = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\grids.npy')
-Prime_data = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\prime_grids.npy')
-loaded_entropies = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\entropies.npy')
+class Setup:
+    def __init__(self):
+        self.grid_data = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\grids.npy')
+        self.prime_data = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\prime_grids.npy')
+        self.loaded_entropies = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\entropies.npy')
+        self.microstate_data = pd.read_csv(
+            r"C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\Microstate_dataframe.csv")
 
-microstate_data=pd.read_csv(r"C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\Microstate_dataframe.csv")
+        ## Get some class attibutes where the later Manim Scene can see
+        self.Grid_copies = self.grid_data.shape[0]
+
+    def get_rgb_values(self):
+        RGB=np.array([self.convert_to_rgb_image(self.grid_data[i, :, :],
+                                                                 cmap=plt.get_cmap("plasma")) for i in range(self.Grid_copies)])
+        Gird= RGB[0, :, :, 0] / 255
+        return RGB, Gird
+
+    def convert_to_rgb_image(self, grid_data, cmap="plasma", vmin=0, vmax=16):
+        self.cmap = matplotlib.colormaps.get_cmap(cmap)
+        self.norm = plt.Normalize(vmin, vmax)
+        self.grid_data_rgb = self.cmap(self.norm(grid_data))
+        return (self.grid_data_rgb[:, :, :3] * 255).astype(np.uint8)
+
+    def setup(self, *kwargs):
+        start = 0
+        stop = (self.grid_data.shape[0] - 1) * 4
+        step = 4
+        entropy = np.array(self.loaded_entropies)
+        x_index = np.arange(start, stop + step, step)
+
+        return start, stop, x_index, entropy
 
 class check_grid:
     def __init__(self, yes=False):
         self.animation=yes
+        self.SETUP=Setup()
+        self.Grid_data=self.SETUP.grid_data
+        self.Prime_data=self.SETUP.prime_data
 
     def Animation(self):
         if self.animation==True:
@@ -23,22 +52,22 @@ class check_grid:
             plt.style.use("dark_background")
             fig, (ax, ax2)=plt.subplots(1,2, figsize=(10,5), width_ratios=[1.2, 0.98])
 
-            im=ax.imshow(Grid_data[0, :, :], cmap="plasma", vmin=np.min(Grid_data[0, :, :]), vmax=np.max(Grid_data[0, :, :]))
-            im2=ax2.imshow(Prime_data[0, :, :], cmap="binary", vmin=0, vmax=1)
+            im=ax.imshow(self.Grid_data[0, :, :], cmap="plasma", vmin=np.min(self.Grid_data[0, :, :]), vmax=np.max(self.Grid_data[0, :, :]))
+            im2=ax2.imshow(self.Prime_data[0, :, :], cmap="binary", vmin=0, vmax=1)
             fig.colorbar(im, ax=ax, label="Intensity", shrink=0.56)
 
             ax.axis("off")
             ax2.axis("off")
 
             def animate(frame):
-                im.set_data(Grid_data[frame, :, :])
-                im2.set_data(Prime_data[frame, :, :])
+                im.set_data(self.Grid_data[frame, :, :])
+                im2.set_data(self.Prime_data[frame, :, :])
 
                 ax.set_title(f"Temp: {1.0}", loc="left")
                 ax.set_title(f"Epoch: {frame}", loc="right")
                 ax2.set_title("Non-Prime locations")
 
-            ani=FuncAnimation(fig,animate, frames=Grid_data.shape[0], repeat=False, interval=80)
+            ani=FuncAnimation(fig,animate, frames=self.Grid_data.shape[0], repeat=False, interval=80)
             plt.show()
 
         else:
@@ -47,39 +76,20 @@ class check_grid:
 bug_checking=check_grid(yes="no")
 bug_checking.Animation()
 
-# Function to convert grid data to RGB image using colormap
-def convert_to_rgb_image(grid_data, cmap="plasma", vmin=0, vmax=16):
-    cmap = matplotlib.colormaps.get_cmap(cmap)
-    norm = plt.Normalize(vmin, vmax)
-    grid_data_rgb = cmap(norm(grid_data))
-    return (grid_data_rgb[:, :, :3] * 255).astype(np.uint8)
-
-# Convert Grid_data to RGB image using colormap
-Grid_copies=Grid_data.shape[0]
-Grid_data_rgb = np.array([convert_to_rgb_image(Grid_data[i, :, :], cmap=plt.get_cmap("plasma")) for i in range(Grid_copies)])
-
-Gird=Grid_data_rgb[0, :, :, 0]/255
-
-def setup(Grid_data, entropy_array):
-    start=0
-    stop=(Grid_data.shape[0]-1) * 4
-    step=4
-    entropy=np.array(entropy_array)
-    x_index = np.arange(start, stop + step, step)
-
-    return start, stop, x_index, entropy
-
-start, end, x_index, entropy= setup(Grid_data, loaded_entropies)
 """
 Scene 1: Grid simulation
 Manim Section
-Manim command for low quality: manim -p -ql Image.py ImageFromArray 
-Manim command for medium quality: manim -p -qm Image.py ImageFromArray
-Manim command for high quality: manim -p -qh Image.py ImageFromArray
+Manim command for low quality: manim -p -ql Manimations.py ImageFromArray 
+Manim command for medium quality: manim -p -qm Manimations.py ImageFromArray
+Manim command for high quality: manim -p -qh Manimations.py ImageFromArray
 Note: your_class is changed to what class object you want to render
 """
 class ImageFromArray(Scene):
     def construct(self):
+        ## Define the variables and data needed first
+        Datas=Setup()
+        Grid_data_rgb, Gird=Datas.get_rgb_values()
+        start, end, x_index, entropy = Datas.setup()
         # Create axes for the graph
         axes = Axes(
             x_range=[0, 1600, 400],  # [start, stop, step]
@@ -130,13 +140,13 @@ class ImageFromArray(Scene):
                 image_label = Tex("Grid:")
                 image_label.next_to(Image, UP, aligned_edge=LEFT)
 
-                title = Tex(r"This is a Cellular Automata (CA) grid")
+                title = Tex(r"This is a Cellular Automata grid")
                 title.to_corner(UP + LEFT)
 
                 self.play(Write(title), Write(image_label))
 
-                self.wait()
-                transform_title = Tex(r"That is using CA to show increasing entropy")
+                self.wait(2)
+                transform_title = Tex(r"Designed to show entropy increase")
                 transform_title.to_corner(UP + LEFT)
                 self.play(Transform(title, transform_title))
             else:
@@ -185,6 +195,7 @@ class ImageFromArray(Scene):
         black_rect = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_opacity=0, width=20, height=25)
         self.play(FadeIn(black_rect, run_time=2))
         self.wait()
+        
 """
 Scene 2: Defining the microstate
 To activate the CoinTossTree code write into the command promt
