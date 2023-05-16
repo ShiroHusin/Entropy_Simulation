@@ -1164,7 +1164,386 @@ class GOL(MovingCameraScene):
 Call this function on Pycharm's command promt: manim -p -qh Manimations.py GameRules
 """
 
-class GameRules(Scene):
+class GameRules(MovingCameraScene):
     def construct(self):
+
+        Title = Tex("The Big idea:").to_corner(UP + LEFT)
+        Title_Underline = Underline(Title, buff=0.15)
+
+        Game_Rules = r"""
+        \begin{minipage}{7cm}
+        \begin{itemize}
+            \item A live cell with fewer than two live neighbours dies.
+            \item A live cell with two or three live neighbours lives on.
+            \item A live cell with more than three live neighbours dies.
+            \item A dead cell with exactly three live neighbours becomes a live cell.
+        \end{itemize}
+        \end{minipage}
+        """
+
+        subtitle = Tex("The rules", font_size=40).to_corner(LEFT).shift(UP * 2.2)
+
+        GOL_rules = Tex(Game_Rules, font_size=30).to_corner(LEFT)
+
+        self.play(FadeIn(Title, shift=DOWN), FadeIn(Title_Underline),
+                  FadeIn(GOL_rules, shift=UP), Write(subtitle))
+        self.wait(2)
+
+        Game_of_life_code = '''import numpy as np
+from scipy.ndimage import convolve
+
+def game_of_life(array):
+    kernel = np.array([[1, 1, 1],
+                       [1, 0, 1],
+                       [1, 1, 1]], 
+                    dtype=np.uint8)
+
+    neighbors=convolve(array, kernel, mode="constant")
+
+    next_state = np.logical_or(neighbors == 3,
+            np.logical_and(neighbors == 2,array)
+            ).astype(np.uint8)
+
+    array = next_state
+    return array
+    '''
+
+        code = Code(code=Game_of_life_code, tab_width=4, background="rectangle",
+                    language="Python", font="Monospace", background_stroke_width=0,
+                    style="github-dark").to_corner(RIGHT).shift(RIGHT * 2.6).scale(0.60)
+
+        self.play(FadeIn(code, shift=UP))
+        self.wait(5)
+
+        Title2 = Tex("How it works", font_size=50).to_corner(UP + LEFT)
+        Title2_underline = Underline(Title2, buff=0.15)
+
+        self.play(Transform(Title, Title2), Transform(Title_Underline, Title2_underline),
+                  FadeOut(GOL_rules), FadeOut(subtitle))
+
+        ## Create the grid
+        self.create_grid(5, 5, 0.4, code)
+
+        Title3 = Tex("Scaling it up", font_size=50).to_corner(UP + LEFT)
+        self.play(FadeOut(Title), FadeOut(Title_Underline))
+        self.play(FadeIn(Title3))
+        self.wait()
+
+        ## Play in the game of life code again using a function
+        # Start with a random grid
+        arr = np.random.randint(0, 2, (35, 70))
+        generate_multiplier = np.random.choice([0, 1], size=(35, 70), p=[0.6, 0.4])
+        grid = arr * generate_multiplier
+
+        # Create the grid of rectangles
+        rect_group = self.create_square_grid(grid, 0.2)
+        self.play(FadeIn(rect_group), FadeOut(Title3))
+
+        # Run the Game of Life for a few steps
+        for _ in range(70):
+            grid = self.game_of_life(grid)
+            rect_group = self.update_colors(rect_group, grid)
+            self.wait(0.15)
+
+        self.wait()
+        Black_rectangle = Rectangle(fill_color=BLACK, fill_opacity=1, stroke_opacity=0, width=20, height=25)
+        self.play(FadeIn(Black_rectangle))
+        self.wait()
+
+    def create_grid(self, rows, columns, size, code_mobject):
+
+        no_of_rows = rows
+        no_of_columns = columns
+
+        square_size = size
+
+        grid_group = VGroup()
+        kernel_group = VGroup()
+
+        numbers_array = np.random.randint(0, 2, size=(no_of_rows, no_of_columns))
+
+        # Iterate through each row and column to create the grid
+        for row in range(no_of_rows):
+            for column in range(no_of_columns):
+                # Create a square
+                square = Square(side_length=square_size)
+
+                # Position the square based on its row and column
+                square.shift((column - no_of_columns // 2) * square_size * RIGHT)
+                square.shift((row - no_of_rows // 2) * square_size * UP)
+
+                # Get the number from the NumPy array
+                number = numbers_array[row, column]
+
+                # Create a Tex object for the number
+                number_tex = Tex(str(number), font_size=25)
+
+                # Position the number at the center of the square
+                number_tex.move_to(square.get_center())
+
+                # Add the square and number to the grid_group
+                grid_group.add(square)
+                grid_group.add(number_tex)
+
+        kernel_group = VGroup()
+        kernel = np.array([[1, 1, 1], [1, 0, 1], [1, 1, 1]], dtype=np.uint8)
+
+        ## Iterate through the grid to create a kernel
+        for kernel_row in range(3):
+            for kernel_column in range(3):
+                ## Create a square
+                kernel_square = Square(side_length=square_size)
+
+                kernel_square.shift((kernel_column - 3 // 2) * square_size * RIGHT)
+                kernel_square.shift((kernel_row - 3 // 2) * square_size * UP)
+
+                kern = kernel[kernel_row, kernel_column]
+
+                kern_tex = Tex(str(kern), font_size=25)
+
+                kern_tex.move_to(kernel_square.get_center())
+
+                kernel_group.add(kernel_square)
+                kernel_group.add(kern_tex)
+        # Create the new yellow kernel
+        colored_kernel = VGroup()
+
+        # Create 8 yellow squares and 1 transparent square for the kernel
+        kernel_colors = [YELLOW] * 9
+        for i in range(9):
+            if i == 4:
+                Kernel_square = Square(side_length=square_size, fill_color=kernel_colors[i], fill_opacity=0)
+            else:
+                Kernel_square = Square(side_length=square_size, fill_color=kernel_colors[i], fill_opacity=0.5)
+            Kernel_square.shift(((i % 3) - 1) * square_size * RIGHT)
+            Kernel_square.shift(((i // 3) - 1) * square_size * UP)
+            colored_kernel.add(Kernel_square)
+
+
+        grid_group.to_corner(LEFT).shift(DOWN * 1)
+        kernel_group.to_corner(LEFT + UP).shift(DOWN * 1)
+        colored_kernel.to_corner(LEFT + UP).shift(DOWN * 1)
+
+        ## Get the Brace Mobject
+        array_description = BraceLabel(grid_group, "Array", brace_direction=DOWN, font_size=30)
+        kernel_description = BraceLabel(kernel_group, "Kernel", brace_direction=DOWN, font_size=30)
+
+        self.play(FadeIn(grid_group), FadeIn(kernel_group),
+                  Write(array_description), Write(kernel_description), run_time=1.5)
+        self.wait(3)
+        self.play(FadeOut(array_description), FadeOut(kernel_description))
+        self.play(Transform(kernel_group, colored_kernel))
+        self.wait()
+
+        Right_arrow = Tex(r"$\Rightarrow$", font_size=50)
+        Right_arrow.next_to(grid_group, RIGHT, buff=0.5)
+
+        # Create the result grid
+        result_group, final_result = self.convolve_result(numbers_array, square_size)
+        result_group.next_to(Right_arrow, RIGHT, buff=0.5)
+
+        self.play(FadeIn(Right_arrow), run_time=0.7)
+        self.move_kernel(kernel_group, grid_group, no_of_rows, no_of_columns, square_size, result_group, code_mobject
+                         , Right_arrow, final_result)
+        self.wait()
+
+    def move_kernel(self, kernel_group, grid_group, no_of_rows, no_of_columns, square_size, result_group, code_mobject
+                    , Right_arrow, final_group):
+        ## Set the final_group
+        final_group.to_corner(LEFT).shift(DOWN * 1.5 + RIGHT * 1.75)
+
+        # Initially, make all squares and their numbers in the result grid invisible
+        rect = self.highlight_code_line(code_mobject, 9)  # Assuming the convolve operation is at line 9
+        for idx, mobject in enumerate(result_group):
+
+            if idx % 2 == 0:  # If it's a square
+                mobject.set_stroke(width=3, color=WHITE)
+                mobject.set_fill(opacity=0)  # Ensure the square is transparent
+
+            else:  # If it's a number
+                mobject.set_opacity(1)
+
+        for i in range(no_of_rows * no_of_columns):
+            target_square = grid_group[2 * i].get_center()
+            shift_vector = target_square - kernel_group[-1].get_center() + (UP * square_size + RIGHT * square_size)
+
+            # play the run lamda function
+
+            running = lambda i: 1 if 0 <= i <= 4 else 0.3
+
+            self.play(kernel_group.animate.shift(shift_vector), run_time=running(i))
+
+            # Fade in the square and its number
+            self.play(FadeIn(result_group[2 * i]), FadeIn(result_group[2 * i + 1]),
+                      run_time=running(i))  # Square and number
+
+        self.play(Uncreate(rect), FadeOut(kernel_group), run_time=1)
+        self.wait()
+        self.play(grid_group.animate.shift(UP * 2), result_group.animate.shift(UP * 2), FadeOut(Right_arrow))
+        self.wait()
+
+        for index, mobject in enumerate(final_group):
+            if index % 2 == 0:
+                mobject.set_stroke(width=3, color=WHITE)
+                mobject.set_fill(opacity=0)
+            else:
+                mobject.set_opacity(1)
+
+        rectangle = self.highlight_code_line(code_mobject, 11, kernel=False)
+        for k in range(no_of_rows * no_of_columns):
+            arrow1, arrow2 = self.arrows_compare(grid_group[2 * k + 1], result_group[2 * k + 1], final_group[2 * k + 1])
+            run = lambda k: 1 if 0 <= k <= 3 else 0.3
+
+            # play the animations
+            self.play(Create(arrow1), Create(arrow2), FadeIn(final_group[2 * k]), FadeIn(final_group[2 * k + 1]),
+                      run_time=run(k))
+            self.play(FadeOut(arrow1), FadeOut(arrow2), run_time=run(k) / 2)
+
+        self.wait(2)
+        ## Label the grids
+        final_group_label = BraceLabel(final_group, "Array", brace_direction=LEFT, font_size=30)
+        self.play(FadeIn(final_group_label))
+        self.wait(2.5)
+        self.play(FadeOut(grid_group), FadeOut(final_group), FadeOut(result_group), FadeOut(final_group_label),
+                  Uncreate(rectangle))
+        self.play(FadeOut(code_mobject))
+        self.wait()
+
+    def convolve_result(self, array, square_size):
+        kernel = np.array([[1, 1, 1], [1, 0, 1], [1, 1, 1]], dtype=np.uint8)
+        neighbours = convolve(array, kernel, mode="constant")
+
+        next_state = np.logical_or(neighbours == 3, np.logical_and(neighbours == 2, array)).astype(np.uint8)
+
+        Result = VGroup()
+
+        no_of_rows = neighbours.shape[0]
+        no_of_columns = neighbours.shape[1]
+
+        # Iterate through each row and column to create the grid of neighbours
+        for row in range(no_of_rows):
+            for column in range(no_of_columns):
+                # Create a square with transparent fill and visible borders
+                square = Square(side_length=square_size, fill_opacity=0, stroke_width=0, stroke_color=WHITE)
+
+                # Position the square based on its row and column
+                square.shift((column - no_of_columns // 2) * square_size * RIGHT)
+                square.shift((row - no_of_rows // 2) * square_size * UP)
+
+                # Get the number from the NumPy array
+                number = neighbours[row, column]
+
+                # Create a Tex object for the number
+                number_tex = Tex(str(number), font_size=25)
+
+                # Position the number at the center of the square
+                number_tex.move_to(square.get_center())
+
+                # Add the square and number to the grid_group
+                Result.add(square)
+                Result.add(number_tex)
+
+        Final_result = VGroup()
+        ## Iterate the next state of the game of life
+        for rows in range(next_state.shape[0]):
+            for columns in range(next_state.shape[1]):
+                square = Square(side_length=square_size, fill_opacity=0, stroke_width=0, stroke_color=WHITE)
+
+                square.shift((columns - next_state.shape[1] // 2) * square_size * RIGHT)
+                square.shift((rows - next_state.shape[0] // 2) * square_size * UP)
+
+                numbers = next_state[rows, columns]
+
+                numbers_tex = Tex(str(numbers), font_size=25)
+
+                numbers_tex.move_to(square.get_center())
+
+                Final_result.add(square)
+                Final_result.add(numbers_tex)
+
+        return Result, Final_result
+
+    def highlight_code_line(self, code_mobject, line_number, kernel=True):
+        # Highlight the line
+        if kernel:
+            rect = SurroundingRectangle(code_mobject.code[line_number], color=RED, buff=0.05).shift(DOWN * 0.12)
+            self.play(Create(rect), run_time=0.5)
+        else:
+            rect = SurroundingRectangle(code_mobject.code[line_number], color=RED, buff=0.2).shift(DOWN * 0.35)
+            self.play(Create(rect), run_time=0.5)
+
+        return rect
+
+    def arrows_compare(self, element1, element2, final_element):
+        arrow1 = Arrow(start=element1.get_center(), end=final_element.get_center(), color=RED, buff=0)
+        arrow2 = Arrow(start=element2.get_center(), end=final_element.get_center(), color=RED, buff=0)
+
+        return arrow1, arrow2
+
+    def game_of_life(self, grid):
+        kernel = np.array([[1, 1, 1],
+                           [1, 0, 1],
+                           [1, 1, 1]], dtype=np.uint8)
+
+        num_neighbors = signal.convolve2d(grid, kernel, mode='same', boundary='wrap')
+
+        next_state = np.logical_or(num_neighbors == 3, np.logical_and(num_neighbors == 2, grid)).astype(np.uint8)
+
+        return next_state
+
+    def create_square_grid(self, grid, size):
+        no_of_rows = grid.shape[0]
+        no_of_columns = grid.shape[1]
+
+        rect_group = VGroup()
+
+        # Iterate through each row and column to create the grid
+        for row in range(no_of_rows):
+            for column in range(no_of_columns):
+                # Create a rectangle
+                rect = Rectangle(height=size, width=size, stroke_width=0.1)
+
+                # Position the rectangle based on its row and column
+                rect.shift((column - no_of_columns // 2) * size * RIGHT)
+                rect.shift((row - no_of_rows // 2) * size * UP)
+
+                # Color the rectangle based on the value in the grid
+                if grid[row, column]==1:
+                    cl=WHITE
+                else:
+                    cl=BLACK
+
+                # noinspection PyArgumentList
+                rect.set_fill(color=cl, opacity=1.0)
+                # Add the rectangle to the group
+                # inspection PyArgumentList
+                rect_group.add(rect)
+
+        return rect_group
+
+    def update_colors(self, rect_group, grid):
+        no_of_rows = grid.shape[0]
+        no_of_columns = grid.shape[1]
+
+        # Iterate through each rectangle in the group and update its color
+        for i, rect in enumerate(rect_group):
+            # Calculate the row and column of this rectangle
+            row = i // no_of_columns
+            column = i % no_of_columns
+
+            # Update the color of the rectangle
+            rect.set_fill(color=WHITE if grid[row, column] else BLACK, opacity=1)
+
+        return rect_group
+
+"""
+Scene 3: Manim animations, Early ideas of cellular automata 
+The scene is version 1 of my Stochastic cellular automata game 
+"""
+
+class Automata(MovingCameraScene):
+    def construt(self):
         pass
+
+
 
