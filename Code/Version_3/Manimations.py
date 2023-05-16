@@ -1541,9 +1541,167 @@ Scene 3: Manim animations, Early ideas of cellular automata
 The scene is version 1 of my Stochastic cellular automata game 
 """
 
-class Automata(MovingCameraScene):
-    def construt(self):
-        pass
+class Automata(Scene):
+    def construct(self):
+        Title = Tex("Early ideas").to_corner(LEFT + UP)
+
+        Automata_rules = r"""
+        \begin{minipage}{8cm}
+        \begin{itemize}
+            \item A cell can only be 1 or 0.
+            \item The number of 1s within the grid cannot change.
+            \item An occupied cell can move in a random direction to its Moore neighbourhood if unoccupied.
+        \end{itemize}
+        \end{minipage}
+    """
+
+        subtitle = Tex("The rules", font_size=40).to_corner(LEFT).shift(UP * 2.3)
+        Rules = Tex(Automata_rules, font_size=33).to_corner(LEFT)
+
+        self.play(FadeIn(Title, shift=DOWN), FadeIn(subtitle, shift=UP), Write(Rules))
+        self.wait()
+
+        subtitle2 = Tex("Neighbours").to_corner(RIGHT + UP).shift(LEFT * 2)
+        subtitle3 = Tex("Possible directions").to_corner(RIGHT + UP).shift(LEFT * 1.8)
+        self.play(FadeIn(subtitle2))
+
+        moore_group, von_neumann_group = self.neighbour_mobject(0.5)
+        moore_group.to_corner(RIGHT).shift(UP * 1.5 + LEFT * 2.5)
+        von_neumann_group.to_corner(RIGHT).shift(DOWN * 1 + LEFT * 2.5)
+
+        Brace_desc = BraceLabel(moore_group, "Moore", font_size=30, brace_direction=DOWN, buff=0.1)
+        Neumann_brace = BraceLabel(von_neumann_group, "Neumann", font_size=30, brace_direction=DOWN, buff=0.1)
+
+        rect = Rectangle(color=RED, height=1.5, width=8.3, stroke_width=2).to_corner(LEFT).shift(DOWN * 1 + LEFT * 0.2)
+
+        self.play(FadeIn(moore_group), FadeIn(von_neumann_group), FadeIn(Brace_desc), FadeIn(Neumann_brace))
+        self.wait(4)
+
+        self.play(FadeOut(von_neumann_group), FadeOut(Brace_desc), FadeOut(Neumann_brace))
+        self.wait()
+        self.play(moore_group.animate.shift(DOWN * 1.5))
+        self.play(moore_group.animate.scale(2))
+
+        ## Create arrows first
+        arrows = self.arrows_probability(moore_group)
+
+        ## Create the objects and fade into Manim Scene
+        self.play(Create(rect), Transform(subtitle2, subtitle3))
+        self.play(FadeIn(arrows))
+        self.wait(5)
+
+    def neighbour_mobject(self, square_size):
+        moore_group = VGroup()
+        kernel_colors = [YELLOW] * 9
+        for i in range(9):
+            if i == 4:
+                Kernel_square = Square(side_length=square_size, fill_color=kernel_colors[i], fill_opacity=0)
+            else:
+                Kernel_square = Square(side_length=square_size, fill_color=kernel_colors[i], fill_opacity=0.5)
+            Kernel_square.shift(((i % 3) - 1) * square_size * RIGHT)
+            Kernel_square.shift(((i // 3) - 1) * square_size * UP)
+            moore_group.add(Kernel_square)
+
+        ## Now define the von_neumann_group
+
+        von_neumann_group = VGroup()
+        group_colors = [TEAL_A] * 9
+
+        for j in range(9):
+            if j % 2 == 0:
+                squares = Square(side_length=square_size, fill_color=group_colors[j], fill_opacity=0)
+            else:
+                squares = Square(side_length=square_size, fill_color=group_colors[j], fill_opacity=0.5)
+
+            squares.shift(((j % 3) - 1) * square_size * RIGHT)
+            squares.shift(((j // 3) - 1) * square_size * UP)
+            von_neumann_group.add(squares)
+
+        return moore_group, von_neumann_group
+
+    def arrows_probability(self, mobject):
+        Arrows = VGroup()
+        center_square = mobject[4]
+        for idx, square in enumerate(mobject):
+            if idx != 4:
+                arrow = self.arrow(center_square, square)
+                Arrows.add(arrow)
+
+        return Arrows
+
+    def arrow(self, start_square, end_square):
+        start = start_square.get_center()
+        end = end_square.get_center()
+
+        return Arrow(start=start, end=end, color=GREY_A)
+
+    def create_large_grid(self, grid, square_size=0.1):
+        grid_length = grid.shape[0]
+        grid_width = grid.shape[1]
+
+        grid_group = VGroup()
+
+        for rows in range(grid_length):
+            for columns in range(grid_width):
+                ## Create the rectangles necessary
+                Rect = Rectangle(height=square_size, width=square_size, stroke_width=0.05)
+
+                Rect.shift((columns - grid_width // 2) * square_size * RIGHT)
+                Rect.shift((rows - grid_length // 2) * square_size * UP)
+
+                if grid[rows, columns] == 1:
+                    cl = RED_E
+                else:
+                    cl = BLUE_A
+
+                # noinspection PyArgumentList
+                Rect.set_fill(color=cl, opacity=1.0)
+                # Add the rectangle to the group
+                # inspection PyArgumentList
+                grid_group.add(Rect)
+
+        return grid_group
+
+    def update_colors(self, grid_group, grid: np.ndarray):
+        no_of_rows = grid.shape[0]
+        no_of_columns = grid.shape[1]
+
+        # Iterate through each rectangle in the group and update its color
+        for index, Rectangles in enumerate(grid_group):
+            # Calculate the row and column of this rectangle
+            row = index // no_of_columns
+            column = index % no_of_columns
+
+            # Update the color of the rectangle
+            Rectangles.set_fill(color=WHITE if grid[row, column] else BLACK, opacity=1)
+
+        return grid_group
+
+    ## Automata has attribute automata_function so that it can run early CA grid structures.
+    def automata_function(self, grid, heat_transfer_probability):
+        black_cells = np.where(grid[1:-1, 1:-1] == 1)
+        indices = np.arange(len(black_cells[0]))
+        np.random.shuffle(indices)
+        black_cells = (black_cells[0][indices], black_cells[1][indices])
+        direction_vector = np.array([[0, -1], [-1, 0], [1, 0], [0, 1], [-1, -1], [1, -1], [1, 1], [-1, 1]])
+        for i in range(len(black_cells[0])):
+            x, y = black_cells[0][i] + 1, black_cells[1][i] + 1
+            if np.random.rand() < heat_transfer_probability:
+                neighbors = np.array(
+                    [grid[x][y - 1], grid[x - 1][y], grid[x + 1][y], grid[x][y + 1], grid[x - 1][y - 1],
+                     grid[x + 1][y - 1],
+                     grid[x + 1][y + 1], grid[x - 1][y + 1]])
+                if np.all(neighbors == 1) == True:
+                    pass
+                else:
+                    boolean_dir_index = (neighbors == 0)
+                    valid_directions = direction_vector[boolean_dir_index]
+                    valid_directions_flat = valid_directions.reshape(-1, 2)
+                    possible_directions = valid_directions_flat[np.random.choice(valid_directions_flat.shape[0])]
+                    grid[x + possible_directions[0]][y + possible_directions[1]] = 1
+                    grid[x][y] = 0
+        return grid
+
 
 
 
