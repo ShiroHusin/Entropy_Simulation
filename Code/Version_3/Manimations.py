@@ -1595,11 +1595,22 @@ class Automata(Scene):
 
         ## Create arrows first
         arrows = self.arrows_probability(moore_group)
-
+        Title2=Tex("Simulation at scale").to_corner(UP + LEFT)
         ## Create the objects and fade into Manim Scene
         self.play(Create(rect), Transform(subtitle2, subtitle3))
         self.play(FadeIn(arrows))
         self.wait(5)
+        self.play(FadeOut(Rules), FadeOut(subtitle), FadeOut(subtitle2), Uncreate(rect), FadeOut(arrows), FadeOut(moore_group))
+        self.play(Transform(Title, Title2))
+        ## Now initialize the grid
+
+        length=150
+        grid, initial_grid=self.initialize_grid(length, choice="circle")
+        grid_object=self.create_large_grid(grid, square_size=0.03).to_corner(LEFT)
+
+        ## Now play the function
+        self.Automata_loop(grid, grid_object, 100)
+
 
     def neighbour_mobject(self, square_size):
         moore_group = VGroup()
@@ -1646,7 +1657,7 @@ class Automata(Scene):
 
         return Arrow(start=start, end=end, color=GREY_A)
 
-    def create_large_grid(self, grid, square_size=0.1):
+    def create_large_grid(self, grid : np.ndarray, square_size=0.1):
         grid_length = grid.shape[0]
         grid_width = grid.shape[1]
 
@@ -1684,17 +1695,18 @@ class Automata(Scene):
             column = index % no_of_columns
 
             # Update the color of the rectangle
-            Rectangles.set_fill(color=WHITE if grid[row, column] else BLACK, opacity=1)
+            Rectangles.set_fill(color=RED_E if grid[row, column] else BLUE_A, opacity=1)
 
         return grid_group
 
     ## Automata has attribute automata_function so that it can run early CA grid structures.
-    def automata_function(self, grid, heat_transfer_probability):
+    def automata_function(self, grid, heat_transfer_probability = 1):
         black_cells = np.where(grid[1:-1, 1:-1] == 1)
         indices = np.arange(len(black_cells[0]))
         np.random.shuffle(indices)
         black_cells = (black_cells[0][indices], black_cells[1][indices])
         direction_vector = np.array([[0, -1], [-1, 0], [1, 0], [0, 1], [-1, -1], [1, -1], [1, 1], [-1, 1]])
+
         for i in range(len(black_cells[0])):
             x, y = black_cells[0][i] + 1, black_cells[1][i] + 1
             if np.random.rand() < heat_transfer_probability:
@@ -1713,6 +1725,45 @@ class Automata(Scene):
                     grid[x][y] = 0
         return grid
 
+    def initialize_grid(self, length, choice="circle"):
+      grid = np.pad(np.zeros((length, length)), pad_width=1, mode='constant', constant_values=1)
+      if choice == "circle":
+          center = ((length / 2), (length / 2))
+          radius = int(math.sqrt(0.1 * length ** 2 / math.pi))
+          x, y = np.meshgrid(np.linspace(0, length + 2, length + 2), np.linspace(0, length + 2, length + 2))
+          distance = np.sqrt((x - center[0]) ** 2 + (y - center[1]) ** 2)
+          grid[distance <= radius] = 1
+      elif choice == "ellipse":
+          center = (length // 2, length // 2)
+          x, y = np.meshgrid(np.linspace(0, length + 2, length + 2), np.linspace(0, length + 2, length + 2))
+          a = 0.13 * length  # x-radius
+          b = 0.09 * length  # y-radius
+          ellipse = (x - center[0]) ** 2 / a ** 2 + (y - center[1]) ** 2 / b ** 2
+          grid[ellipse <= 1] = 1
+      else:
+          print("Invalid choice")
+          sys.exit()
 
+      test_grid = np.copy(grid)
+      return grid, test_grid
+
+    def Automata_loop(self, grid, grid_object, epochs):
+        Grids=VGroup()
+        for k in range(epochs):
+            grid=self.automata_function(grid, heat_transfer_probability=1)
+            grid_object=self.update_colors(grid_object, grid).to_corner(LEFT)
+            Grids.add(grid_object.copy())
+        
+        ## Play loop
+        for i in range(epochs):
+            if i == 0:
+                self.play(FadeIn(Grids[0]), run_time=1.5)
+                self.wait()
+            elif i > 0:
+                self.play(Transform(Grids[i-1], Grids[i]), run_time=0.1)
+                
+            self.wait(5)
+            Black_rect= Rectangle(fill_color=BLACK, fill_opacity=1, stroke_opacity=0, width=20, height=25)
+            self.play(FadeIn(Black_rect), run_time=2.5)
 
 
