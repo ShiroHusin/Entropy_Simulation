@@ -1550,6 +1550,7 @@ def game_of_life(array):
 """
 Scene 3: Manim animations, Early ideas of cellular automata 
 The scene is version 1 of my Stochastic cellular automata game 
+Call the function:  manim -p -qh Manimations.py Automata
 """
 
 class Automata(Scene):
@@ -1570,26 +1571,26 @@ class Automata(Scene):
         Rules = Tex(Automata_rules, font_size=33).to_corner(LEFT)
 
         self.play(FadeIn(Title, shift=DOWN), FadeIn(subtitle, shift=UP), Write(Rules))
-        self.wait()
+        self.wait(2)
 
         subtitle2 = Tex("Neighbours").to_corner(RIGHT + UP).shift(LEFT * 2)
         subtitle3 = Tex("Possible directions").to_corner(RIGHT + UP).shift(LEFT * 1.8)
         self.play(FadeIn(subtitle2))
 
         moore_group, von_neumann_group = self.neighbour_mobject(0.5)
-        moore_group.to_corner(RIGHT).shift(UP * 1.5 + LEFT * 2.5)
-        von_neumann_group.to_corner(RIGHT).shift(DOWN * 1 + LEFT * 2.5)
+        moore_group.to_corner(RIGHT).shift(UP * 1.5 + LEFT * 2.7)
+        von_neumann_group.to_corner(RIGHT).shift(DOWN * 1 + LEFT * 2.7)
 
         Brace_desc = BraceLabel(moore_group, "Moore", font_size=30, brace_direction=DOWN, buff=0.1)
         Neumann_brace = BraceLabel(von_neumann_group, "Neumann", font_size=30, brace_direction=DOWN, buff=0.1)
 
-        rect = Rectangle(color=RED, height=1.5, width=8.3, stroke_width=2).to_corner(LEFT).shift(DOWN * 1 + LEFT * 0.2)
+        rect = Rectangle(color=RED, height=1.5, width=8.0, stroke_width=2).to_corner(LEFT).shift(DOWN * 1 + LEFT * 0.2)
 
         self.play(FadeIn(moore_group), FadeIn(von_neumann_group), FadeIn(Brace_desc), FadeIn(Neumann_brace))
-        self.wait(4)
+        self.wait(5)
 
         self.play(FadeOut(von_neumann_group), FadeOut(Brace_desc), FadeOut(Neumann_brace))
-        self.wait()
+        self.wait(2)
         self.play(moore_group.animate.shift(DOWN * 1.5))
         self.play(moore_group.animate.scale(2))
 
@@ -1600,16 +1601,11 @@ class Automata(Scene):
         self.play(Create(rect), Transform(subtitle2, subtitle3))
         self.play(FadeIn(arrows))
         self.wait(5)
-        self.play(FadeOut(Rules), FadeOut(subtitle), FadeOut(subtitle2), Uncreate(rect), FadeOut(arrows), FadeOut(moore_group))
-        self.play(Transform(Title, Title2))
-        ## Now initialize the grid
-
-        length=150
-        grid, initial_grid=self.initialize_grid(length, choice="circle")
-        grid_object=self.create_large_grid(grid, square_size=0.03).to_corner(LEFT)
-
+        self.play(FadeOut(subtitle2), Uncreate(rect), FadeOut(arrows), FadeOut(moore_group))
+        self.play(Transform(Title, Title2), Rules.animate.to_corner(RIGHT), subtitle.animate.shift(RIGHT * 7.0 + UP * 1))
+        self.play(Rules.animate.shift(UP * 1), subtitle.animate.scale(1.2))
         ## Now play the function
-        self.Automata_loop(grid, grid_object, 100)
+        self.Automata_loop(50, 0.12, 10)
 
 
     def neighbour_mobject(self, square_size):
@@ -1747,23 +1743,44 @@ class Automata(Scene):
       test_grid = np.copy(grid)
       return grid, test_grid
 
-    def Automata_loop(self, grid, grid_object, epochs):
+    def Automata_loop(self, length, square_size, epochs):
         Grids=VGroup()
+        length=length   
+        grid, initial_grid=self.initialize_grid(length, choice="circle")
+        grid_object=self.create_large_grid(grid[1:-1,  1:-1], square_size=square_size).to_corner(LEFT)
+
         for k in range(epochs):
             grid=self.automata_function(grid, heat_transfer_probability=1)
-            grid_object=self.update_colors(grid_object, grid).to_corner(LEFT)
-            Grids.add(grid_object.copy())
-        
+            grid_object=self.update_colors(grid_object, grid[1:-1, 1:-1]).to_corner(LEFT)
+            if k % 2 == 0:
+                Grids.add(grid_object.copy())
+
         ## Play loop
-        for i in range(epochs):
-            if i == 0:
-                self.play(FadeIn(Grids[0]), run_time=1.5)
-                self.wait()
-            elif i > 0:
-                self.play(Transform(Grids[i-1], Grids[i]), run_time=0.1)
-                
-            self.wait(5)
-            Black_rect= Rectangle(fill_color=BLACK, fill_opacity=1, stroke_opacity=0, width=20, height=25)
-            self.play(FadeIn(Black_rect), run_time=2.5)
+        for i in range(len(Grids)):
+          loop = lambda i : 1.5 if i == 0 else 0.1
+          if i == 0:
+              self.play(FadeIn(Grids[0]), run_time=loop(i))
+              self.wait()
+          else:
+              self.play(Transform(Grids[i-1], Grids[i]), run_time=loop(i))
+      
+        
+        self.wait(3)
+        Black_rectangle=Rectangle(color=BLACK, height=15, width=20)
+        self.play(FadeIn(Black_rectangle))
+        self.wait()
+
+"""
+Manim Scene 4 : Evolution of the ideas of cellular Automata simulation, more complex simulation 
+Tell the boltzmann factors and the move probability concept. 
+call the function:  manim -p -qh Manimations.py Automata_v2
+"""
+
+class Automata_v2(Scene):
+    def construct(self):
+        pass 
+    
+    
+
 
 
