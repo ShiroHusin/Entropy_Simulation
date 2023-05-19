@@ -1774,14 +1774,117 @@ class Automata(Scene):
 """
 Manim Scene 4 : Evolution of the ideas of cellular Automata simulation, more complex simulation 
 Tell the boltzmann factors and the move probability concept. 
-call the function:  manim -p -qh Manimations.py Automata_v2
+call the function:  manim -p -qh Manimations.py Automata_V2
 """
 
-class Automata_v2(Scene):
-    def construct(self):
-        pass 
-    
-    
 
+class Automata_V2(MovingCameraScene):
+    def construct(self):
+        Title = Tex("Extending the idea and rules").to_corner(UP + LEFT)
+        Title_Underline = Underline(Title, buff=0.1)
+
+        Rule_space = r"""
+    \begin{minipage}{7.5cm}
+    \begin{itemize}
+        \item The grid can only contain integers of the vector space $\mathbb{Z}^{2}$.
+        \item The sum of the integers cannot change over time.
+        \item An non-zero-cell can transfer 1 energy unit to its neighbour according to its boltzmann factors
+    \end{itemize}
+    \end{minipage}
+    """
+        Rules = Tex(Rule_space, font_size=35).to_corner(LEFT).shift(UP * 0)
+        self.play(FadeIn(Title, shift=DOWN), FadeIn(Title_Underline), Write(Rules))
+        self.wait(2)
+
+        ## Get the neighbour mobject and arrow mobject
+
+        Neighbour = self.moore_neighbours(0.85).to_corner(RIGHT).shift(LEFT * 1.5 + UP * 1)
+        Arrow_mobjects = self.arrows_probability(Neighbour)
+
+        Side_title = Tex("Example").to_corner(RIGHT + UP).shift(LEFT * 2)
+        self.wait(5)
+
+        ## Get the boltzmann factors into the picture. 
+        Title2 = Tex("The boltzmann factors").to_corner(UP + LEFT)
+        Title2_Underline = Underline(Title2, buff=0.1)
+        Later_rule = r"""
+    \begin{minipage}{7.5cm}
+    \begin{itemize}
+        \item An non-zero-cell can transfer 1 energy unit to its neighbour according to its boltzmann factors
+    \end{itemize}
+    \end{minipage}
+    """
+
+        Latter_rule = Tex(Later_rule, font_size=30).to_corner(LEFT).shift(UP * 2)
+        Boltzmann_equation = MathTex(r"\frac{p_{i}}{p_{j}} = \exp\left(\frac{\epsilon_{j}-\epsilon_{i}}{kT}\right)",
+                                     font_size=35).to_corner(LEFT).shift(UP * 0.5)
+        self.play(Transform(Title, Title2), Transform(Title_Underline, Title2_Underline), Transform(Rules, Latter_rule))
+        self.play(Write(Boltzmann_equation))
+        self.wait(3)
+
+        ## Change the Later rules
+        Title3 = Tex("In the context of the simulation", font_size=40).to_corner(UP + LEFT)
+        self.play(FadeOut(Title_Underline), FadeOut(Title), FadeIn(Title3, shift=DOWN), Uncreate(Rules))
+
+        Eq = MathTex(r"p_{j} = \exp\left(\frac{\Pi-\epsilon_{j}}{T}\right)", font_size=35).to_corner(LEFT).shift(
+            UP * 2.0)
+        description = Tex("*$\Pi$ is the maximum integer value in the simulation", font_size=30).move_to(ORIGIN).shift(
+            DOWN * 3)
+        self.play(Boltzmann_equation.animate.shift(UP * 1.5))
+        self.play(Transform(Boltzmann_equation, Eq), Write(description))
+
+        self.wait(2)
+
+        ## Perform the calculation in this section 
+        Title4 = Tex("Calculating the probabilities", font_size=40).to_corner(UP + LEFT)
+        self.play(Transform(Title3, Title4), Create(Neighbour), FadeIn(Side_title, shift=DOWN))
+        self.play(Create(Arrow_mobjects))
+        self.wait(3)
+
+        ## Call upon an animation for the grid to be highlighted and mathematical computations
+        ## self.complex_animation()
+
+    def moore_neighbours(self, square_size):
+        Neighbour = VGroup()
+        kernel_colors = [WHITE] * 9
+        Number_list = ["1", "3", "2", "6", "7", "8", "5", "0", "4"]
+        for j in range(len(kernel_colors)):
+
+            if j == 4:
+                Kernel_square = Square(side_length=square_size, fill_color=BLUE_C, fill_opacity=0.8)
+            elif j == 5:
+                Kernel_square = Square(side_length=square_size, fill_color=RED_C, fill_opacity=0.8)
+            else:
+                Kernel_square = Square(side_length=square_size, fill_color=kernel_colors[j], fill_opacity=0.8)
+
+            Kernel_square.shift(((j % 3) - 1) * square_size * RIGHT)
+            Kernel_square.shift(((j // 3) - 1) * square_size * UP)
+
+            number = Tex(Number_list[j], font_size=35).set_color(BLACK)
+            number.move_to(Kernel_square.get_center())
+
+            Neighbour.add(Kernel_square)
+            Neighbour.add(number)
+
+        return Neighbour
+
+    def arrows_probability(self, mobject):
+        Arrows = VGroup()
+        center_square = mobject[8]
+        for idx, square in enumerate(mobject):
+            if idx != 8:
+                arrow = self.arrow(center_square, square)
+                Arrows.add(arrow)
+
+        return Arrows
+
+    def arrow(self, start_square, end_square):
+        start = start_square.get_center()
+        end = end_square.get_center()
+
+        return Arrow(start=start, end=end, color=GREEN_E)
+
+    def complex_animation(self):
+        pass
 
 
