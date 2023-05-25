@@ -1,7 +1,7 @@
 """
 A cellular automata inspired simulation to demonstrate and visualise what entropy actually is, followed by the game of life
 Author: Bowen Shiro Husin
-Date:07/04/2023
+Date: 26/05/2023
 Version = Automata_v3
 Note: This file is not meant to be run on its own
 """
