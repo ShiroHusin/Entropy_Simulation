@@ -77,7 +77,7 @@ class image_processor:
                 return image_grid
                         
 """
-These 2 classes are designed to resize an ImageMobject into the Manim environment later. 
+These 2 classes are designed to resize an ImageMobject into the Manim environment later and is a much smaller version of it.  
 This would not work if the Collect class has not been triggered
 """
 class ImageResize:
