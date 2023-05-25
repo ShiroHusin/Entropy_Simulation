@@ -75,6 +75,57 @@ class image_processor:
             else:
                 image_grid=np.pad(reduced_range_image, pad_width=1, mode="constant",constant_values=np.max(reduced_range_image))
                 return image_grid
+                        
+"""
+These 2 classes are designed to resize an ImageMobject into the Manim environment later. 
+This would not work if the Collect class has not been triggered
+"""
+class ImageResize:
+    def __init__(self):
+        self.grid_data = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\grids.npy')
+        self.prime_data = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\prime_grids.npy')
+        self.loaded_entropies = np.load(r'C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\entropies.npy')
+        self.microstate_data = pd.read_csv(
+            r"C:\Users\Bowen\PycharmProjects\Entropy_Game\Code\Manim\Data\Microstate_dataframe.csv")
+
+        ## Get some class attibutes where the later Manim Scene can see
+        self.Grid_copies = self.grid_data.shape[0]
+
+    def get_rgb_values(self):
+        RGB=np.array([self.convert_to_rgb_image(self.grid_data[i, :, :],
+                    cmap=plt.get_cmap("plasma")) for i in range(self.Grid_copies)])
+        return RGB
+
+    def convert_to_rgb_image(self, grid_data, cmap="plasma", vmin=0, vmax=16):
+        self.cmap = matplotlib.colormaps.get_cmap(cmap)
+        self.norm = plt.Normalize(vmin, vmax)
+        self.grid_data_rgb = self.cmap(self.norm(grid_data))
+        return (self.grid_data_rgb[:, :, :3] * 255).astype(np.uint8)
+
+    def image_resize(self, length=40, height=70):
+        Im = self.get_rgb_values()  # shape: (401, 300, 532, 3)
+        resized_grids = []
+        for j in range(Im.shape[0]):
+            smaller_image = resize(Im[j, :, :, :], (length, height), order=1, preserve_range=True).astype(np.uint8)
+            resized_grids.append(deepcopy(smaller_image))
+
+        return np.array(resized_grids)
+
+    def check_image_and_plot(self , check : bool, save : bool):
+        Smaller_images=self.image_resize()
+        if check==True and save==False:
+            print(f"The size is {Smaller_images.shape}")
+
+        if check==True and save==True:
+            np.save("smaller_images", Smaller_images)
+
+## Run the resize script
+CHECK=ImageResize()
+sizes=CHECK.check_image_and_plot(False, False)
+
+"""
+End of the 2 classes
+"""
 
 class Microstate_table:
     def __init__(self):
