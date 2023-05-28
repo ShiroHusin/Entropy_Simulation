@@ -2,7 +2,10 @@
 ## Version 3 in the works
 - Uses [Manim](https://github.com/ManimCommunity/manim)
 - Uses images as starting grids
-- Currently on version 2
+- Currently on version 3
+- Working on a Manim video that explores what's going on under the hood or if you want, you can read my practice attempt using LaTeX in [Automata.pdf](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.pdf)
+- The main pipeline is called [Engines.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Version_3/Engines.py)
+- Manim code is called [Manimations.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Version_3/Manimations.py)
 
 https://user-images.githubusercontent.com/122879756/232184406-4249c91a-0053-4005-9a03-944d7b5fdc7a.mp4
 
@@ -86,5 +89,5 @@ As in existence itself it is deeply ingrained.
    - Within self.play() use the FadeIn, FadeOut or Transform methods on a fast run_time to switch between ImageMobjects and add points
    - Run the code and enjoy : ) 
 
-
+### Work in progress
     
