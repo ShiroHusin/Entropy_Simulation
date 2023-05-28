@@ -1,7 +1,7 @@
 """
 A cellular automata inspired simulation to demonstrate and visualise what entropy actually is, followed by the game of life
 Author: Bowen Shiro Husin
-Date: 26/05/2023
+Date:28/05/2023
 Version = Automata_v3
 Note: This file is not meant to be run on its own
 """
@@ -10,6 +10,7 @@ import math
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.cm
 from matplotlib.gridspec import GridSpec
 from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Slider
@@ -21,6 +22,7 @@ from numba import njit
 from PIL import Image
 import cv2
 from skimage.transform import resize
+from tqdm import trange
 
 class image_processor:
     def __init__(self):
@@ -75,9 +77,8 @@ class image_processor:
             else:
                 image_grid=np.pad(reduced_range_image, pad_width=1, mode="constant",constant_values=np.max(reduced_range_image))
                 return image_grid
-                        
 """
-These 2 classes are designed to resize an ImageMobject into the Manim environment later and is a much smaller version of it.  
+These 2 classes are designed to resize an ImageMobject into the Manim environment later. 
 This would not work if the Collect class has not been triggered
 """
 class ImageResize:
@@ -283,8 +284,9 @@ class Automata_Simulation:
         self.primes=show_primes
         self.max_val=np.max(self.grid[1:-1 , 1:-1])
 
-        plt.style.use('dark_background')
-        self.fig = plt.figure(figsize=(10, 4.5))
+        # plt.style.use('dark_background')
+        self.fig = plt.figure(figsize=(10, 5))
+        plt.subplots_adjust(top=0.95, wspace=0.4)
 
         if show_primes:
             self.gs = GridSpec(1, 2 , width_ratios=[1.2, 0.98])
@@ -299,7 +301,7 @@ class Automata_Simulation:
             self.im2= self.ax2.imshow( grid_conversion(self.grid), cmap="binary", vmin=0, vmax=1)
             self.ax2.axis("off")
 
-        self.fig.colorbar(self.im, ax=self.ax, label='Energy level', shrink=0.55)
+        self.fig.colorbar(self.im, ax=self.ax, label='Energy level', shrink=0.55, location="bottom",  pad=0.08)
         self.entropies=[]
 
         if save==False and self.controllable==True:
@@ -353,16 +355,17 @@ class Automata_Simulation:
     def update(self, frame):
         self.grid = apply_rules_2d(self.grid, self.alpha, self.temperature)
         self.im.set_data(self.grid[1:-1, 1:-1])
-        self.ax.set_title("Temp: {:.1f} ".format(self.temperature), loc="left")
-        self.ax.set_title("Move probability: {:.2f} ".format(self.alpha), loc="right")
+        self.ax.set_title(r"$\beta$: {:.1f} ".format(self.temperature), loc="left")
+        self.ax.set_title(r"$\alpha$: {:.1f} ".format(self.alpha), loc="right")
+        self.ax.set_title("Automata grid", loc="center")
 
         ## Entropy plot
         if self.primes==False:
-            entropy = calculate_entropy(self.grid, self.microstate_dictionary) / 1000
+            entropy = calculate_entropy(self.grid, self.microstate_dictionary) / 10000
             self.entropies.append(entropy)
             self.ax2.plot(self.entropies, color='blue')
             self.ax2.set_xlabel("Epoch")
-            self.ax2.set_ylabel("Entropy $S.10^{3}/k_b$")
+            self.ax2.set_ylabel("Entropy $S.10^{{4}}/k_b$")
 
         # Number detection
         elif self.primes==True:
@@ -385,7 +388,6 @@ After that's done you can call the method plot_entropy to see the nice 3D plot t
 WARNING: THIS SCRIPT WILL KILL YOUR CPU IF ITS A POTATO CPU or take 1 day to run. 
 """
 
-
 class collect(Automata_Simulation):
 
     def collect_data(self, microstates_df, frames, collect=True):
@@ -395,7 +397,7 @@ class collect(Automata_Simulation):
         grid = np.copy(self.grid)
         self.frames_to_render = frames
         if collect == True:
-            for k in range(self.frames_to_render):
+            for k in (t:=trange(self.frames_to_render)):
                 new_grid = apply_rules_2d(grid, self.alpha, self.temperature)
                 entropy_x = calculate_entropy(new_grid, microstates_df) / 1000
                 prime_array = grid_conversion(new_grid)
@@ -405,6 +407,7 @@ class collect(Automata_Simulation):
                     prime_config.append(prime_array)
 
                 grid = new_grid
+                t.set_description(f"Progress: ")
 
         return array_config, prime_config, entropy_data
 
@@ -639,3 +642,7 @@ class DataCollector:
 
         else:
             raise ValueError("Conductivities and Temperatures array cannot be of the same size.")
+
+
+
+
