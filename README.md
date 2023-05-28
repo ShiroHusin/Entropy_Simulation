@@ -3,14 +3,14 @@
 - Uses [Manim](https://github.com/ManimCommunity/manim)
 - Uses images as starting grids
 - Currently on version 3
-- Working on a Manim video that explores what's going on under the hood or if you want, you can read my practice attempt using LaTeX in [Automata.pdf](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.pdf)
+- Working on a Manim video that explores what's going on under the hood, if you want, you can read my attempt of using LaTeX in [Automata.pdf](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.pdf)
 - The main pipeline is called [Engines.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Version_3/Engines.py)
 - Manim code is called [Manimations.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Version_3/Manimations.py)
 
 https://user-images.githubusercontent.com/122879756/232184406-4249c91a-0053-4005-9a03-944d7b5fdc7a.mp4
 
-## For entertainment purposes, here is a rap poem I made
-
+## For entertainment purposes, here is a rap poem I made 
+#### This is authentic, No GPT-4/ChatGPT or LLM produced poems are made here, I only use it to help me Code.  
 ```py
 """
 To understand, we'll need to discern
