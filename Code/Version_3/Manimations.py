@@ -2332,46 +2332,53 @@ To call this class call this in the command prompt: manim -p -qh Manimations.py 
 
 class EntropyConvolution(MovingCameraScene):
     def construct(self):
-        Title = Tex("The crux of the problem: Calculating entropy", font_size=40).to_corner(LEFT + UP)
+        Title=Tex("The crux of the problem: Calculating entropy",font_size=40).to_corner(LEFT + UP)
         self.play(Write(Title))
         self.wait()
 
-        strategy = self.create_strategy(Title, 1)
+        strategy=self.create_strategy(Title, 1)
         self.play(FadeIn(strategy, shift=DOWN))
         self.wait(7)
 
-        Title2 = Tex("The process to do it").to_corner(LEFT + UP)
+        Title2=Tex("The process to do it").to_corner(LEFT + UP)
         self.play(Transform(Title, Title2), Uncreate(strategy))
         self.wait()
-        Number_list = self.create_number_mobjects().to_corner(LEFT)
+        Number_list=self.create_number_mobjects().to_corner(LEFT)
         self.play(Create(Number_list))
-        self.wait(3)
+        self.play(Number_list.animate.shift(UP * 1))
+        self.wait()
 
-    def create_strategy(self, Title_Mobject, square_size):
-        Strats = VGroup()
+        Elements=self.create_add_mobjects()
+        Elements.to_corner(LEFT).shift(DOWN * 1)
+        self.play(Create(Elements))
+        self.wait()
+        
+
+    def create_strategy(self, Title_Mobject,  square_size):
+        Strats=VGroup()
 
         ## First thing to notice
-        Strategy = Tex("Strategy", font_size=40).to_corner(UP + LEFT).next_to(Title_Mobject, DOWN * 2)
-        Notice = Tex(r"A cell can have a maximum energy value $\Phi$ chosen from 0 to 255.",
-                     font_size=30).next_to(Strategy, DOWN * 0.4).shift(RIGHT * 0.2)
+        Strategy=Tex("Strategy", font_size=40).to_corner(UP+LEFT).next_to(Title_Mobject, DOWN * 2)
+        Notice=Tex(r"A cell can have a maximum energy value $\Phi$ chosen from 0 to 255.", 
+                  font_size=30).next_to(Strategy, DOWN * 0.4).shift(RIGHT * 0.2)
 
         Notice.next_to(Notice, DOWN * 1)
-        Arrow_one = Tex(r"$\Rightarrow$").next_to(Notice, DOWN).rotate(-np.pi / 2)
-
-        ## 2nd thing to notice
-        Notice_two = Tex("We can partision the grid into 2x2 matrices and find the entropy of each matrix.",
-                         font_size=30).next_to(Arrow_one, DOWN * 1)
-        Arrow_two = Tex(r"$\Rightarrow$").next_to(Notice_two, DOWN * 1).rotate(-np.pi / 2)
+        Arrow_one=Tex(r"$\Rightarrow$").next_to(Notice, DOWN).rotate(-np.pi / 2)
+        
+        ## 2nd thing to notice  
+        Notice_two=Tex("We can partision the grid into 2x2 matrices and find the entropy of each matrix.", font_size=30).next_to(Arrow_one,  DOWN *  1)
+        Arrow_two=Tex(r"$\Rightarrow$").next_to(Notice_two, DOWN * 1).rotate(-np.pi / 2)
 
         ## 3rd thing to Notice
-        Notice_three = Tex(
-            r"The job is to find integer combinations such that $a+b+c+d = E \; \; \land \; \; 0\leq E \leq 4\Phi$",
-            font_size=30).next_to(Arrow_two, DOWN * 1)
+        Notice_three=Tex(r"The job is to find integer combinations such that $a+b+c+d = E \; \; \land \; \; 0\leq E \leq 4\Phi$",
+                        font_size=30).next_to(Arrow_two, DOWN * 1)
 
-        ## Make the Matrix
-        matrix = Matrix([["a", "b"], ["c", "d"]], v_buff=0.8, h_buff=0.9).next_to(Notice_three, DOWN * 0.8).scale(0.7)
+        ## Make the Matrix 
+        matrix=Matrix([["a", "b"], ["c", "d"]], v_buff=0.8, h_buff=0.9).next_to(Notice_three, DOWN * 0.8).scale(0.7)
+
 
         Strats.add(Strategy, Notice, Arrow_one, Notice_two, Arrow_two, Notice_three, matrix)
+        
 
         return Strats
 
@@ -2392,15 +2399,30 @@ class EntropyConvolution(MovingCameraScene):
                 Number_Groups.add(elements)
 
         for i in range(1, len(Number_Groups)):
-            Number_Groups[i].next_to(Number_Groups[i - 1], RIGHT * 0.65)
+            Number_Groups[i].next_to(Number_Groups[i-1], RIGHT * 0.65)
 
         ## Move the comments down
         for idx, mobject in enumerate(Number_Groups):
-
-            if idx % 2 == 0 and idx != len(number_lists) - 1 and idx != 0:
-                mobject.shift(DOWN * 0.15)
+          
+          if idx % 2 == 0 and idx != len(number_lists)-1 and idx != 0:
+              mobject.shift(DOWN * 0.15)
 
         return Number_Groups
+
+    def create_add_mobjects(self):
+        Groups=VGroup()
+        elements=["a", "+" ,"b", "+",  "c", "+", "d", "="]
+        for i in range(len(elements)):
+
+            if i==0:
+                element=MathTex( elements[0] , font_size=40)
+                Groups.add(element)
+            elif i >= 1:
+                element=MathTex( elements[i] ,font_size=40)
+                element.next_to(Groups[i-1], RIGHT)
+                Groups.add(element)
+
+        return Groups
 
 
     
