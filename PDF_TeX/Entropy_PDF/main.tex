@@ -1,0 +1,54 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage[a4paper, width=150mm, top=25mm, bottom=25mm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{comment}
+\usepackage{pythonhighlight}
+\usepackage[numbers]{natbib}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+\usepackage{mathtools}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\newcommand\Myperm[2][^n]{\prescript{#1\mkern-2.5mu}{}P_{#2}}
+\newcommand\Mycomb[2][^L]{\prescript{#1\mkern-0.5mu}{}C_{#2}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\titleformat{\chapter}[hang] 
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter:}{1em}{}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\thesection}
+\fancyhead[R]{\textbf{Entropy using cellular automata}}
+\fancyfoot{}
+\fancyfoot[L]{\thepage}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\include{chapters/Chapter2.tex}
+
+
+
+
+\end{document}
