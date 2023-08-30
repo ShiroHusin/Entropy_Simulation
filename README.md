@@ -5,7 +5,7 @@
 - Currently on version 3
 - If you want to know exactly what's going on under the hood, you can read my attempt of using LaTeX in [Automata.pdf](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Automata.pdf)
 - The main pipeline is called [Engines.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Version_3/Engines.py)
-- Manim code is called [Manimations.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Version_3/Manimations.py)
+- Manim code is called [Animations.py](https://github.com/ShiroHusin/Entropy_Simulation/blob/main/Code/Version_3/Animations.py)
 
 https://user-images.githubusercontent.com/122879756/232184406-4249c91a-0053-4005-9a03-944d7b5fdc7a.mp4
 
