@@ -1,5 +1,5 @@
 
-## Version 3 in the works
+## How it works
 - Uses [Manim](https://github.com/ManimCommunity/manim)
 - Uses images as starting grids
 - Currently on version 3
